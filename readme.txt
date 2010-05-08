@@ -222,7 +222,7 @@ $(function(){
 
 
 ********************************************************************
-#-------[ 10. Find (line:~482) ]
+#-------[ 10. Find (line:~483) ]
 
 				<ul>
 					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
@@ -258,11 +258,11 @@ if (!defined('PUN_SEARCH_MAX_WORD'))
 ********************************************************************
 #-------[ 14. After, Add ]
 
-		// Load the a usermap language file - need it here because its uesed in the main menu
-		if (file_exists(PUN_ROOT.'/usermap/lang/'.$pun_user['language'].'.php'))
-			require PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php';
-		else
-			require PUN_ROOT.'usermap/lang/English.php';
+// Load the a usermap language file - need it here because its uesed in the main menu
+if (file_exists(PUN_ROOT.'/usermap/lang/'.$pun_user['language'].'.php'))
+	require PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php';
+else
+	require PUN_ROOT.'usermap/lang/English.php';
 
 
 ********************************************************************

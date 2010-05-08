@@ -14,12 +14,6 @@ if ($pun_user['g_read_board'] == '0')
 if ($pun_user['g_um_view_map'] == '0')
 	message($lang_common['No permission']);
 
-// Load the a language file
-if (file_exists(PUN_ROOT.'/usermap/lang/'.$pun_user['language'].'.php'))
-	require PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php';
-else
-	require PUN_ROOT.'usermap/lang/English.php';
-
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 $page_head = array(
