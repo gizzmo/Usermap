@@ -27,9 +27,10 @@ $(function(){
 		latlng:  ['.$pun_config['o_um_default_lat'].','.$pun_config['o_um_default_lng'].'],
 		zoom: '.$pun_config['o_um_default_zoom'].',
 		height: '.$pun_config['o_um_height'].',
-		fitzoom: '.$pun_config['o_um_fit_map'].',
-	};
-	UserMap.main.init('.(isset($id)? '{id:'.$id.'}':'').');
+		fitzoom: '.$pun_config['o_um_fit_map'].'
+	};'.(isset($id)? '
+	UserMap.options = {id:'.$id.'};':'').'
+	UserMap.main.init();
 });
 </script>'
 );

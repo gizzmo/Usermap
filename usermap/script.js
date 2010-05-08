@@ -25,11 +25,8 @@ var UserMap = {
 	/**
 	 * Set up the main map.
 	 */
-	init: function(options)
+	init: function()
 	{
-		// Set the provided options to the global object
-		UserMap.options = options || {};
-
 		// extend the options with the defaults
 		var opts = $.extend({}, UserMap.defaults, UserMap.options);
 
@@ -98,10 +95,10 @@ UserMap.main = {
 	/**
 	 * Set everything up
 	 */
-	init: function(options)
+	init: function()
 	{
-		// init the map. it sets the options to the global object
-		UserMap.init(options);
+		// init the map.
+		UserMap.init();
 
 		// extend the options with the defaults
 		var opts = $.extend({}, UserMap.defaults, UserMap.options);
@@ -222,10 +219,10 @@ UserMap.profile = {
 	/**
 	 * Set up the profile map
 	 */
-	init: function(options)
+	init: function()
 	{
-		// init the map. it sets the options to the global object
-		UserMap.init(options);
+		// init the map.
+		UserMap.init();
 
 		// extend the options with the defaults
 		var opts = $.extend({}, UserMap.defaults, UserMap.options);

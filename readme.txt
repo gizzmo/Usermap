@@ -150,12 +150,13 @@ $(function(){
 	UserMap.defaults = {
 		latlng:  ['.$pun_config['o_um_default_lat'].','.$pun_config['o_um_default_lng'].'],
 		zoom: '.$pun_config['o_um_default_zoom'].',
-		height: '.$pun_config['o_um_height'].',
-	},
-	UserMap.profile.init({'.(($user['um_lat'] !='' && $user['um_lng'] !='')? "\n\t\t".
-		'latlng: ['.$user['um_lat'].','.$user['um_lng'].'],'."\n\t\t".
-		'zoom: 14':
-	'').'})
+		height: '.$pun_config['o_um_height'].'
+	};'.(($user['um_lat'] !='' && $user['um_lng'] !='')? '
+	UserMap.options = {
+		latlng: ['.$user['um_lat'].','.$user['um_lng'].'],
+		zoom: 14
+	};':'').'
+	UserMap.profile.init();
 });
 </script>'
 		);
@@ -195,6 +196,7 @@ $(function(){
 <?php
 	}
 // User Map by Gizzmo - END
+
 
 
 ********************************************************************
