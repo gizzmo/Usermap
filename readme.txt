@@ -166,7 +166,7 @@ $(function(){
 
 ?>
 	<div class='blockform'>
-		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_usermap['Section usermap']?></span></h2>
+		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_usermap['User map']?></span></h2>
 
 		<div class='box' id='user_map_canvas'></div>
 
@@ -178,13 +178,13 @@ $(function(){
 					<input type='hidden' id='um_lng' name='form[um_lng]' value='<?php echo $user['um_lng']?>' />
 
 					<fieldset>
-						<legend><?php echo $lang_usermap['Usermap legend']?></legend>
+						<legend><?php echo $lang_usermap['User map legend']?></legend>
 						<div class='infldset'>
 <?php if ($user['um_lat'] =='' && $user['um_lng'] =='' && $pun_config['o_um_find_location'] == '1'): ?>
 							<p><?php echo $lang_usermap['Find location help']?></p>
 							<p class='clearb actions'><span><a href='javascript:UserMap.profile.find_location();'><?php echo $lang_usermap['Find location']?></a></span></p>
 <?php endif; ?>
-							<p><?php echo $lang_usermap['Usermap help']?></p>
+							<p><?php echo $lang_usermap['User map help']?></p>
 						</div>
 					</fieldset>
 				</div>
@@ -195,7 +195,6 @@ $(function(){
 <?php
 	}
 // User Map by Gizzmo - END
-
 
 
 ********************************************************************
