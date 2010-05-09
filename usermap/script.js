@@ -34,12 +34,12 @@ var UserMap = {
 		var mapCanvas = $('#user_map_canvas');
 
 		// make the map canvas the correct height
-		mapCanvas.height(opts.height)
+		mapCanvas.height(opts.height);
 
 		UserMap.theMap = new google.maps.Map(mapCanvas[0], {
 			center: new google.maps.LatLng(opts.latlng[0], opts.latlng[1]),
 			zoom: opts.zoom,
-			MapTypeId: google.maps.MapTypeId.ROADMAP,
+			MapTypeId: google.maps.MapTypeId.ROADMAP
 		});
 	},
 
@@ -143,10 +143,6 @@ UserMap.main = {
 			{
 				var point = new google.maps.LatLng(item.point[0],item.point[1]);
 
-				// save the marker to the userlist array
-				list.push('<li id="u'+item.id+'"><a style="background-image:url(usermap/img/icons/'+item.icon+')" href="javascript:UserMap.main.click('+item.id+');">'+item.name+'</a></li>');
-				UserMap.main.markers[item.id] = marker;
-
 				//extend the bounds
 				bounds.extend(point);
 
@@ -159,11 +155,15 @@ UserMap.main = {
 					title: item.name
 				});
 
+				// save the marker to the userlist array
+				list.push('<li id="u'+item.id+'"><a style="background-image:url(usermap/img/icons/'+item.icon+')" href="javascript:UserMap.main.click('+item.id+');">'+item.name+'</a></li>');
+				UserMap.main.markers[item.id] = marker;
+
 				// info window listener
 				google.maps.event.addListener(marker, 'click', function(event)
 				{
 					// close the info window
-					closeinfowindow()
+					closeinfowindow();
 
 					// if the info window has been opened before
 					if (UserMap.main.infowindowCache[item.id])
@@ -196,7 +196,7 @@ UserMap.main = {
 
 			// if a id was provided, open its infowindow
 			if (opts.id)
-				UserMap.main.click(opts.id)
+				UserMap.main.click(opts.id);
 		});
 	}
 };
