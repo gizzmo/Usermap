@@ -31,6 +31,10 @@ if (isset($_POST['save_group']))
 	$um_add_to_map = ((isset($_POST['um_add_to_map']) && $_POST['um_add_to_map'] == '1') || $is_admin_group) && $um_view_map == '1' ? '1' : '0';
 	$um_icon = (isset($_POST['um_icon']))? pun_trim($_POST['um_icon']): 'white.png';
 
+	// make sure the selected icon actully exists
+	if (!file_exists(PUN_ROOT.'usermap/img/icons/'.$um_icon))
+		$um_icon = 'white.png';
+
 	$db->query('UPDATE '.$db->prefix.'groups SET g_um_view_map='.$um_view_map.', g_um_add_to_map='.$um_add_to_map.', g_um_icon=\''.$db->escape($um_icon).'\' WHERE g_id='.intval($_POST['group_id'])) or error('Unable to update group', __FILE__, __LINE__, $db->error());
 
 	redirect($plugin_url, $lang_usermap_admin['Group updated redirect']);
@@ -128,19 +132,23 @@ else if (isset($_POST['save_options']))
 		'um_fit_map'			=> $_POST['form']['um_fit_map'] != '1' ? '0' : '1',
 	);
 
-	// lat or lng is not numeric and not empty
-	if ((!is_numeric($form['um_default_lat']) && !empty($form['um_default_lat'])) || (!is_numeric($form['um_default_lng']) && !empty($form['um_default_lng'])))
-		message($lang_usermap_admin['lat lng error']);
-
-	// height is not numeric, is not empty and between 300 and 1000
-	if ((!is_numeric($form['um_height']) && !empty($form['um_height'])) || (($form['um_height'] < 300) || ($form['um_height'] > 1000)))
-		message($lang_usermap_admin['height error']);
-
 	// if varibles were empty use the default
-	if (($form['um_default_lng'] == '') && ($form['um_default_lat'] == '')) $form['um_default_zoom'] = '4';
+	if (($form['um_default_lng'] == '') && ($form['um_default_lat'] == '')) $form['um_default_zoom'] = '0';
 	if ($form['um_default_lat'] == '') $form['um_default_lat'] = '0';
 	if ($form['um_default_lng'] == '') $form['um_default_lng'] = '0';
 	if ($form['um_height'] == '') $form['um_default_lng'] = '500';
+
+	// lat or lng is not numeric and not empty
+	if (!is_numeric($form['um_default_lat']) || !is_numeric($form['um_default_lng']))
+		message($lang_usermap_admin['lat lng error']);
+
+	// make sure the zoom is less then 18 and is numberic
+	if (!is_numeric($form['um_default_zoom']) || ($form['um_default_zoom'] > 19 || $form['um_default_zoom'] < 0))
+		message($lang_usermap_admin['zoom error']);
+
+	// height is not numeric, is not empty and between 300 and 1000
+	if (!is_numeric($form['um_height']) || (($form['um_height'] < 300) || ($form['um_height'] > 1000)))
+		message($lang_usermap_admin['height error']);
 
 	foreach ($form as $key => $input)
 	{
@@ -200,10 +208,11 @@ else
 <?php
 	$default_zoom = (isset($_GET['z'])  && is_numeric($_GET['z']))? $_GET['z']: $pun_config['o_um_default_zoom'];
 
-	for ($x=0;$x<=18;$x++)
+	for ($x=0;$x<=19;$x++)
 		echo "\t\t\t\t\t\t\t\t\t\t\t".'<option value=\''.$x.'\''.(($x == $default_zoom)? ' selected=\'selected\'':'').'>'.$x.'</option>'."\n";
 ?>
 										</select>
+										<span><?php echo $lang_usermap_admin['Default zoom info']?></span>
 									</td>
 								</tr>
 								<tr>

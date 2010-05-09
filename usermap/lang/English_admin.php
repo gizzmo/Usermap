@@ -21,6 +21,7 @@ $lang_usermap_admin = array(
 
 	// global options
 	'lat lng error'				=> 'The latitude or longitude that was specfied is invalid.',
+	'zoom error'				=> 'The zoom level that was specfied was invalid.',
 	'height error'				=> 'The Usermap height that was specfied is a invalid height.',
 	'Options updated redirect'	=> 'Options updated. Redirecting …',
 
@@ -29,6 +30,7 @@ $lang_usermap_admin = array(
 	'Default latitude'			=> 'Default latitude',
 	'Default longitude'			=> 'Default longitude',
 	'Default zoom'				=> 'Default zoom',
+	'Default zoom info'			=> 'Zoom level 0 is the farthest and 19 is the closest.',
 	'Map height'				=> 'Map height',
 	'Map height info'			=> 'The height of the map in pixles (between 300 and 1,000). The default is 500.',
 	'Fit map zoom'				=> 'Fit map zoom',
