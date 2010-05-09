@@ -35,7 +35,7 @@ $(function(){
 </script>'
 );
 
-$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), 'User Map');
+$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), 'Usermap');
 define('PUN_ACTIVE_PAGE', 'usermap');
 require PUN_ROOT.'header.php';
 
@@ -50,7 +50,7 @@ require PUN_ROOT.'header.php';
 		</div>
 	</div>
 	<div class='block'>
-		<h2><span><?php echo $lang_usermap['Section usermap']?></span></h2>
+		<h2><span><?php echo $lang_usermap['Usermap']?></span></h2>
 		<div class='box' id='user_map_canvas'></div>
 <?php if ($pun_user['g_id'] == PUN_ADMIN): ?>		<div class='box'>
 			<div class='inbox'>
