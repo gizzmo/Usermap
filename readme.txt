@@ -29,21 +29,21 @@ AFFECTED DATABASE:
 	groups
 
 NOTES:
-	1. All options and group permissions settings are found though
-	   the "Usermap Settings" plugin, link found at the bottom of the
-	   admin menu.
+	- All options and group permissions settings are found though
+	  the "Usermap Settings" plugin, link found at the bottom of the
+	  admin menu.
 
-	2. Each group has a set of permissions. They have permiission to
-	   view the map (good for not allowing guests viewing the map).
-	   They also have permission to add their location to the map
-	   (good for new memebers, so the map doesnt get spamed).
+	- Each group has a set of permissions. They have permiission to
+	  view the map (good for not allowing guests viewing the map).
+	  They also have permission to add their location to the map
+	  (good for new memebers, so the map doesnt get spamed).
 
-	3. Each group also can have a icon for the map, so they stand out
-	   when others view the map.
+	- Each group also can have a icon for the map, so they stand out
+	  when others view the map.
 
-	4. If you want to you can view your users location in Google Earch,
-	   by downloading the file here: <YourSiteUrl>/usermap/list.php?kml
-	   Access to this is also protected by the group permissions.
+	- If you want to you can view your users location in Google Earch,
+	  by downloading the file here: <YourSiteUrl>/usermap/list.php?kml
+	  Access to this is also protected by the group permissions.
 
 TODO:
 	- Option to enable/disable scroll wheel zoom on the map.
