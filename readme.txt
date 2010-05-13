@@ -88,7 +88,7 @@ INSTALLATION:
 // Usermap by Gizzmo - START
 		case 'usermap':
 		{
-			if ($pun_user['g_add_to_map'] == '0')
+			if ($pun_user['g_um_add_to_map'] == '0')
 				message($lang_common['No permission']);
 
 			$form = array(
@@ -136,7 +136,7 @@ $result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.
 // Usermap by Gizzmo - START
 	else if ($section == 'usermap')
 	{
-		if ($pun_user['g_view_map'] == '0' || $pun_user['g_add_to_map'] == '0')
+		if ($pun_user['g_um_view_map'] == '0' || $pun_user['g_um_add_to_map'] == '0')
 			message($lang_common['Bad request']);
 
 		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_usermap['Usermap']);

@@ -105,7 +105,7 @@ while ($user = $db->fetch_assoc($result))
 		'name'		=> $user['username'],
 		'point'		=> array($user['um_lat'],$user['um_lng']),
 		'icon'		=> $user['g_um_icon'],
-		'html'		=> $html ? $html : ''
+		'html'		=> isset($html) ? $html : ''
 	);
 }
 
