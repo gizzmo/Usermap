@@ -67,7 +67,7 @@ $(function(){
 });
 </script>
 	<div class='blockform'>
-		<h2><span><?php echo $lang_usermap_admin['Usermap settings']?></span></h2>
+		<h2><span><?php echo $lang_usermap_admin['User map settings']?></span></h2>
 		<div class='box'>
 			<form id='usermap_groups' method='post' action='<?php echo $plugin_url?>'>
 				<div class='inform'>
@@ -77,7 +77,7 @@ $(function(){
 						<div class='infldset'>
 							<table class='aligntop' cellspacing='0'>
 <?php if ($group['g_id'] != PUN_GUEST): ?>								<tr>
-									<th scope='row'><?php echo $lang_usermap_admin['Usermap icon']?></th>
+									<th scope='row'><?php echo $lang_usermap_admin['User map icon']?></th>
 									<td>
 										<img id='um_icon' src='<?php echo $pun_config['o_base_url'].'/usermap/img/icons/'.$group['g_um_icon']?>'/>
 										<select id='um_icon_select' name='um_icon'>
@@ -90,23 +90,23 @@ $(function(){
 	}
 ?>
 										</select>
-										<span><?php echo $lang_usermap_admin['Usermap icon info']?></span>
+										<span><?php echo $lang_usermap_admin['User map icon info']?></span>
 									</td>
 								</tr>
 <?php endif; if ($group['g_id'] != PUN_ADMIN): ?>								<tr>
-									<th scope='row'><?php echo $lang_usermap_admin['Usermap viewing']?></th>
+									<th scope='row'><?php echo $lang_usermap_admin['User map viewing']?></th>
 									<td>
 										<input type='radio' name='um_view_map' value='1'<?php if ($group['g_um_view_map'] == '1') echo ' checked=\'checked\'' ?> />&nbsp;<strong><?php echo $lang_admin_common['Yes'] ?></strong>&nbsp;&nbsp;
 										<input type='radio' name='um_view_map' value='0'<?php if ($group['g_um_view_map'] == '0') echo ' checked=\'checked\'' ?> />&nbsp;<strong><?php echo $lang_admin_common['No'] ?></strong>
-										<span><?php echo $lang_usermap_admin['Usermap viewing info']?></span>
+										<span><?php echo $lang_usermap_admin['User map viewing info']?></span>
 									</td>
 								</tr>
 <?php if ($group['g_id'] != PUN_GUEST): ?>								<tr>
-									<th scope='row'><?php echo $lang_usermap_admin['Usermap add to']?></th>
+									<th scope='row'><?php echo $lang_usermap_admin['User map add to']?></th>
 									<td>
 										<input type='radio' name='um_add_to_map' value='1'<?php if ($group['g_um_add_to_map'] == '1') echo ' checked=\'checked\'' ?> />&nbsp;<strong><?php echo $lang_admin_common['Yes'] ?></strong>&nbsp;&nbsp;
 										<input type='radio' name='um_add_to_map' value='0'<?php if ($group['g_um_add_to_map'] == '0') echo ' checked=\'checked\'' ?> />&nbsp;<strong><?php echo $lang_admin_common['No'] ?></strong>
-										<span><?php echo $lang_usermap_admin['Usermap add to info']?></span>
+										<span><?php echo $lang_usermap_admin['User map add to info']?></span>
 									</td>
 								</tr>
 <?php endif; endif;?>							</table>
@@ -180,7 +180,7 @@ else
 
 ?>
 	<div id='usermap_plugin' class='blockform'>
-		<h2><span><?php echo $lang_usermap_admin['Usermap settings']?></span></h2>
+		<h2><span><?php echo $lang_usermap_admin['User map settings']?></span></h2>
 		<div class='box'>
 			<form id='example' method='post' action='<?php echo pun_htmlspecialchars($plugin_url) ?>'>
 				<div class='inform' id='um'>

@@ -139,7 +139,7 @@ $result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.
 		if ($pun_user['g_um_view_map'] == '0' || $pun_user['g_um_add_to_map'] == '0')
 			message($lang_common['Bad request']);
 
-		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_usermap['Usermap']);
+		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_usermap['User map']);
 		$page_head = array(
 			'css'		=> '<link rel="stylesheet" type="text/css" media="screen" href="usermap/style.css" />',
 			'jquery'	=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>',
@@ -167,7 +167,7 @@ $(function(){
 
 ?>
 	<div class='blockform'>
-		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_usermap['Usermap']?></span></h2>
+		<h2><span><?php echo pun_htmlspecialchars($user['username']).' - '.$lang_usermap['User map']?></span></h2>
 
 		<div class='box' id='user_map_canvas'></div>
 
@@ -179,13 +179,13 @@ $(function(){
 					<input type='hidden' id='um_lng' name='form[um_lng]' value='<?php echo $user['um_lng']?>' />
 
 					<fieldset>
-						<legend><?php echo $lang_usermap['Usermap legend']?></legend>
+						<legend><?php echo $lang_usermap['User map legend']?></legend>
 						<div class='infldset'>
 <?php if ($user['um_lat'] =='' && $user['um_lng'] =='' && $pun_config['o_um_find_location'] == '1'): ?>
 							<p><?php echo $lang_usermap['Find location help']?></p>
 							<p class='clearb actions'><span><a href='javascript:UserMap.profile.find_location();'><?php echo $lang_usermap['Find location']?></a></span></p>
 <?php endif; ?>
-							<p><?php echo $lang_usermap['Usermap help']?></p>
+							<p><?php echo $lang_usermap['User map help']?></p>
 						</div>
 					</fieldset>
 				</div>
@@ -217,7 +217,7 @@ $(function(){
 // Usermap by Gizzmo - START
 	global $lang_usermap;
 	if ($pun_user['g_um_view_map'] == '1')
-		$links[] = '<li id="navusermap'.((PUN_ACTIVE_PAGE == 'usermap') ? ' class="isactive"': '').'"><a href="usermap.php">'.$lang_usermap['Usermap'].'</a></li>';
+		$links[] = '<li id="navusermap'.((PUN_ACTIVE_PAGE == 'usermap') ? ' class="isactive"': '').'"><a href="usermap.php">'.$lang_usermap['User map'].'</a></li>';
 // Usermap by Gizzmo - END
 
 
@@ -237,7 +237,7 @@ $(function(){
 // Usermap by Gizzmo - START
 	global $lang_usermap;
 	if ($pun_user['g_um_add_to_map'] == '1')
-		echo "\t\t\t\t\t".'<li'.($page == 'usermap'? ' class="isactive"': '').'><a href="profile.php?section=usermap&amp;id='.$id.'">'.$lang_usermap['Usermap'].'</a></li>'."\n";
+		echo "\t\t\t\t\t".'<li'.($page == 'usermap'? ' class="isactive"': '').'><a href="profile.php?section=usermap&amp;id='.$id.'">'.$lang_usermap['User map'].'</a></li>'."\n";
 // Usermap by Gizzmo - END
 ?>
 

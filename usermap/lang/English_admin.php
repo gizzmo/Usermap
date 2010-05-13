@@ -6,23 +6,23 @@
  */
 
 $lang_usermap_admin = array(
-	'Usermap settings'			=> 'Usermap settings',
+	'User map settings'			=> 'User map settings',
 
 	// group options and permissions
 	'Group updated redirect'	=> 'Group updated. Redirecting …',
 
 	'Cur group'					=> '%s options and permissions',
-	'Usermap icon'				=> 'Usermap icon',
-	'Usermap icon info'			=> 'The icon that will represent users in this group on the Usermap.',
-	'Usermap viewing'			=> 'Viewing the usermap',
-	'Usermap viewing info'		=> 'Allow users in this group to view the Usermap.',
-	'Usermap add to'			=> 'Add to the usermap',
-	'Usermap add to info'		=> 'Allow users in this group to add their location to the Usermap.',
+	'User map icon'				=> 'User map icon',
+	'User map icon info'		=> 'The icon that will represent users in this group on the user map.',
+	'User map viewing'			=> 'Viewing the user map',
+	'User map viewing info'		=> 'Allow users in this group to view the user map.',
+	'User map add to'			=> 'Add to the user map',
+	'User map add to info'		=> 'Allow users in this group to add their location to the user map.',
 
 	// global options
 	'lat lng error'				=> 'The latitude or longitude that was specfied is invalid.',
 	'zoom error'				=> 'The zoom level that was specfied was invalid.',
-	'height error'				=> 'The Usermap height that was specfied is a invalid height.',
+	'height error'				=> 'The user map height that was specfied is a invalid height.',
 	'Options updated redirect'	=> 'Options updated. Redirecting …',
 
 	'Options'					=> 'Options',
@@ -39,6 +39,6 @@ $lang_usermap_admin = array(
 
 	// pre group options
 	'Groups'					=> 'Groups',
-	'Groups info'				=> 'Please note that this may look like the normal group options, its not. You can not delete or change any options other then ones related to the Usermap mod.',
+	'Groups info'				=> 'Please note that this may look like the normal group options, its not. You can not delete or change any options other then ones related to the user map mod.',
 	'Edit'						=> 'Edit',
 );
