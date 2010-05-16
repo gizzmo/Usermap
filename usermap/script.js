@@ -39,7 +39,8 @@ var UserMap = {
 		UserMap.theMap = new google.maps.Map(mapCanvas[0], {
 			center: new google.maps.LatLng(opts.latlng[0], opts.latlng[1]),
 			zoom: opts.zoom,
-			MapTypeId: google.maps.MapTypeId.ROADMAP
+			MapTypeId: google.maps.MapTypeId.ROADMAP,
+			scrollwheel: opts.scrollwheel
 		});
 	},
 
@@ -261,6 +262,11 @@ UserMap.profile = {
 			window.setTimeout(function() {UserMap.theMap.panTo(event.latLng);}, 200);
 			$('#um_lat').val(event.latLng.lat());
 			$('#um_lng').val(event.latLng.lng());
+		});
+
+		// make the mouse wheel option checkbox live action
+		$('#mouse_zoom').change(function(){
+			UserMap.theMap.setOptions({scrollwheel:$(this).is(':checked')});
 		});
 	},
 

@@ -33,8 +33,9 @@ function install()
 	/* Users */
 	$db->query('ALTER TABLE `'.$db->prefix.'users`
 		ADD `um_lat` DOUBLE NULL DEFAULT NULL,
-		ADD `um_lng` DOUBLE NULL DEFAULT NULL
-	') or error('Unable to add the `Latitude` and `Longitude` fields to the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+		ADD `um_lng` DOUBLE NULL DEFAULT NULL,
+		ADD `um_scrollwheel` TINYINT(1) NOT NULL DEFAULT  \'0\'
+	') or error('Unable to add the `Latitude`, `Longitude`, and `Scrollwheel` fields to the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
 
 	/* Group */
 	$db->query('ALTER TABLE `'.$db->prefix.'groups`
