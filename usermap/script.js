@@ -101,9 +101,6 @@ UserMap.main = {
 		// init the map.
 		UserMap.init();
 
-		// extend the options with the defaults
-		var opts = $.extend({}, UserMap.defaults, UserMap.options);
-
 		// Make the user list scroll
 		$('#punusermap #usermap_userlist .box').css('max-height',UserMap.defaults.height);
 
@@ -191,13 +188,13 @@ UserMap.main = {
 			if (list.length > 0)
 				$('#usermap_userlist .inbox').html('<ul>'+list.join('')+'</ul>');
 
-			// set the map
-			if (opts.fitzoom && data.length != 0)
+			// set the map to fit the bounds?
+			if (UserMap.defaults.fitzoom && data.length != 0)
 				UserMap.theMap.fitBounds(bounds);
 
 			// if a id was provided, open its infowindow
-			if (opts.id)
-				UserMap.main.click(opts.id);
+			if (UserMap.options.id)
+				UserMap.main.click(UserMap.options.id);
 		});
 	}
 };
@@ -224,9 +221,6 @@ UserMap.profile = {
 	{
 		// init the map.
 		UserMap.init();
-
-		// extend the options with the defaults
-		var opts = $.extend({}, UserMap.defaults, UserMap.options);
 
 		// set the marker options
 		UserMap.profile.loc_marker_opts = {
