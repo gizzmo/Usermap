@@ -46,10 +46,6 @@ NOTES:
 	  Access to this is also protected by the group permissions.
 
 TODO:
-	- Option to enable/disable scroll wheel zoom on the map.
-	  Admin and/or user option.
-	- Save location when viewing the main map, so when you come back
-	  you are where you left it.
 	- Make sure install works for other databases.
 	- Context menu for the map.
 
