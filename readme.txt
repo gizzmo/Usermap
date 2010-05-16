@@ -187,13 +187,21 @@ $(function(){
 							<div class='rbox'>
 								<label><input type='checkbox' id='mouse_zoom' name='form[um_scrollwheel]' value='1'<?php if ($user['um_scrollwheel'] == '1') echo ' checked="checked"' ?> /> <?php echo $lang_usermap['Scrollwheel zoom help']?><br/></label>
 							</div>
-<?php if ($user['um_lat'] =='' && $user['um_lng'] =='' && $pun_config['o_um_find_location'] == '1'): ?>
-							<p><?php echo $lang_usermap['Find location help']?></p>
-							<p class='clearb actions'><span><a href='javascript:UserMap.profile.find_location();'><?php echo $lang_usermap['Find location']?></a></span></p>
-<?php endif; ?>
 						</div>
 					</fieldset>
 				</div>
+<?php if ($user['um_lat'] =='' && $user['um_lng'] ==''): ?>
+
+				<div class='inform'>
+					<fieldset>
+						<legend><?php echo $lang_usermap['Find location']?></legend>
+						<div class='infldset'>
+							<p><?php echo $lang_usermap['Find location help']?></p>
+							<p class='clearb actions'><span><a href='javascript:UserMap.profile.find_location();'><?php echo $lang_usermap['Find location']?></a></span></p>
+						</div>
+					</fieldset>
+				</div>
+<?php endif; ?>
 				<p class='buttons'><input type='submit' name='update' value='<?php echo $lang_common['Submit'] ?>' /> <?php echo $lang_profile['Instructions'] ?></p>
 			</form>
 		</div>

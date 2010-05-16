@@ -26,8 +26,7 @@ function install()
 		(\'o_um_default_lng\',		\'0\'),
 		(\'o_um_default_zoom\',		\'1\'),
 		(\'o_um_height\',			\'500\'),
-		(\'o_um_fit_map\',			\'0\'),
-		(\'o_um_find_location\',	\'0\')
+		(\'o_um_fit_map\',			\'0\')
 	') or error('Unable to add config entries to the `'.$db->prefix.'config` table.', __FILE__, __LINE__, $db->error());
 
 	/* Users */

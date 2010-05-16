@@ -282,7 +282,7 @@ UserMap.profile = {
 		});
 	},
 
-/* doesnt return the correct location, atleast not for me anyways.
+/* doesnt return the correct location, atleast not for me anyways. */
 	find_location: function()
 	{
 		$.getScript('http://www.google.com/jsapi', function()
@@ -307,13 +307,12 @@ UserMap.profile = {
 				else
 					UserMap.profile.loc_marker.setPosition(client_latlng);
 
-				UserMap.theMap.setZoom(14)
+				UserMap.theMap.setZoom(10)
 				window.setTimeout(function() {UserMap.theMap.panTo(client_latlng);}, 200);
 				$('#um_lat').val(client_latlng.lat());
 				$('#um_lng').val(client_latlng.lng());
 			}
 		});
-	},
- */
+	}
 
 };
