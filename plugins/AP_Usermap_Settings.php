@@ -216,7 +216,7 @@ else
 									</td>
 								</tr>
 								<tr>
-									<th scope='row'><?php echo $lang_usermap_admin['Map Height']?></th>
+									<th scope='row'><?php echo $lang_usermap_admin['Map height']?></th>
 									<td>
 										<input type='text' name='form[um_height]' size='5' maxlength='4' value='<?php echo pun_htmlspecialchars($pun_config['o_um_height']) ?>' />
 										<span><?php echo $lang_usermap_admin['Map height info']?></span>
