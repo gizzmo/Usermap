@@ -9,7 +9,7 @@ $release_date		= 'YYYY-MM-DD';
 $author				= 'Gizzmo';
 $author_email		= 'justgiz@gmail.com';
 
-// Versions of FluxBB this mod was created for. Minor variations (i.e. 1.2.4 vs 1.2.5) will be allowed, but a warning will be displayed.
+// Versions of FluxBB this mod was created for. A warning will be displayed, if versions do not match
 $fluxbb_versions	= array('1.4-rc3');
 
 // Set this to false if you haven't implemented the restore function (see below)
@@ -104,39 +104,23 @@ if (!defined('PUN_DEBUG'))
 	define('PUN_DEBUG', 1);
 
 // Make sure we are running a FluxBB version that this mod works with
-$version_warning = false;
-if(!in_array($pun_config['o_cur_version'], $fluxbb_versions))
-{
-	foreach ($fluxbb_versions as $temp)
-	{
-		if (substr($temp, 0, 3) == substr($pun_config['o_cur_version'], 0, 3))
-		{
-			$version_warning = true;
-			break;
-		}
-	}
+$version_warning = !in_array($pun_config['o_cur_version'], $fluxbb_versions);
 
-	if (!$version_warning)
-		exit('You are running a version of FluxBB ('.$pun_config['o_cur_version'].') that this mod does not support. This mod supports FluxBB versions: '.implode(', ', $fluxbb_versions));
-}
-
-
-$style = (isset($cur_user)) ? $cur_user['style'] : $pun_config['o_default_style'];
+$style = (isset($pun_user)) ? $pun_user['style'] : $pun_config['o_default_style'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<title><?php echo $mod_title ?> installation</title>
-<link rel="stylesheet" type="text/css" href="style/<?php echo $pun_config['o_default_style'].'.css' ?>" />
+<title><?php echo pun_htmlspecialchars($mod_title) ?> installation</title>
+<link rel="stylesheet" type="text/css" href="style/<?php echo $style.'.css' ?>" />
 </head>
 <body>
 
-<div id="punwrap">
-	<div id="puninstall" class="pun" style="margin: 0 20% 0 20%">
+<div id="puninstall" class="pun" style="margin: 0 20% 0 20%">
+	<div class="top-box"><div><!-- Top Corners --></div></div>
+	<div class="punwrap">
 
-		<div class="top-box"><div><!-- Top Corners --></div></div>
 
 <?php
 
@@ -199,21 +183,20 @@ else
 		<div class="blockform">
 			<h2><span>Mod installation</span></h2>
 			<div class="box">
-				<form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>?foo=bar">
+				<form method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>">
 					<div><input type="hidden" name="form_sent" value="1" /></div>
 					<div class="inform">
 						<p>This script will update your database to work with the following modification:</p>
 						<p><strong>Mod title:</strong> <?php echo pun_htmlspecialchars($mod_title).' '.$mod_version ?></p>
 						<p><strong>Author:</strong> <?php echo pun_htmlspecialchars($author) ?> (<a href="mailto:<?php echo pun_htmlspecialchars($author_email) ?>"><?php echo pun_htmlspecialchars($author_email) ?></a>)</p>
-						<p><strong>Disclaimer:</strong> Mods are not officially supported by FluxBB. Installation of this modification is done at your own risk. Backup your forum database and any and all applicable files before proceeding.</p>
-						<p>If you've previously installed this mod and would like to uninstall it, you will need to remove all added and changed code. You can then click the restore button below to restore the database.</p>
-<?php if ($version_warning): ?>						<p style="color: #a00"><strong>Warning:</strong> The mod you are about to install was not made specifically to support your current version of FluxBB (<?php echo $pun_config['o_cur_version']; ?>). However, in most cases this is not a problem and the mod will most likely work with your version as well. If you are uncertain about installning the mod due to this potential version conflict, contact the mod author.</p>
+						<p><strong>Disclaimer:</strong> Mods are not officially supported by FluxBB. Mods generally can't be uninstalled without running SQL queries manually against the database. Make backups of all data you deem necessary before installing.</p>
+<?php if ($mod_restore): ?>						<p>If you've previously installed this mod and would like to uninstall it, you can click the Restore button below to restore the database.</p>
+<?php endif; if ($version_warning): ?>						<p style="color: #a00"><strong>Warning:</strong> The mod you are about to install was not made specifically to support your current version of FluxBB (<?php echo $pun_config['o_cur_version']; ?>). This mod supports FluxBB versions: <?php echo pun_htmlspecialchars(implode(', ', $fluxbb_versions)); ?>. If you are uncertain about installing the mod due to this potential version conflict, contact the mod author.</p>
 <?php endif; ?>					</div>
 					<p class='buttons'>
 						<input type="submit" name="install" value="Install" />
 <?php if ($mod_restore): ?>						<input type="submit" name="restore" value="Restore" />
 <?php endif; ?>					</p>
-
 				</form>
 			</div>
 		</div>
@@ -223,8 +206,8 @@ else
 
 ?>
 
-		<div class="end-box"><div><!-- Top Corners --></div></div>
 	</div>
+	<div class="end-box"><div><!-- Top Corners --></div></div>
 </div>
 
 </body>
