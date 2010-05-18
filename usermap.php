@@ -19,7 +19,7 @@ $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 $page_head = array(
 	'css'		=> '<link rel="stylesheet" type="text/css" media="screen" href="usermap/style.css" />',
 	'jquery'	=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>',
-	'googleapi'	=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>',
+	'googleapi'	=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>',
 	'jscript'	=> '<script type="text/javascript" src="usermap/script.js"></script>'."\n".
 '<script type="text/javascript">
 $(function(){

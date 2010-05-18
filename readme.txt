@@ -140,7 +140,7 @@ $result = $db->query('SELECT u.um_lat, u.um_lng, u.um_scrollwheel, u.username, u
 		$page_head = array(
 			'css'		=> '<link rel="stylesheet" type="text/css" media="screen" href="usermap/style.css" />',
 			'jquery'	=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>',
-			'googleapi'	=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>',
+			'googleapi'	=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>',
 			'jscript'	=> '<script type="text/javascript" src="usermap/script.js"></script>',
 '<script type="text/javascript">
 $(function(){
