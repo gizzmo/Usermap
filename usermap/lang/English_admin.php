@@ -14,9 +14,9 @@ $lang_usermap_admin = array(
 	'Cur group'					=> '%s options and permissions',
 	'User map icon'				=> 'User map icon',
 	'User map icon info'		=> 'The icon that will represent users in this group on the user map.',
-	'User map viewing'			=> 'Viewing the user map',
+	'User map viewing'			=> 'View user map',
 	'User map viewing info'		=> 'Allow users in this group to view the user map.',
-	'User map add to'			=> 'Add to the user map',
+	'User map add to'			=> 'Add to user map',
 	'User map add to info'		=> 'Allow users in this group to add their location to the user map.',
 
 	// global options
@@ -26,7 +26,7 @@ $lang_usermap_admin = array(
 	'Options updated redirect'	=> 'Options updated. Redirecting …',
 
 	'Options'					=> 'Options',
-	'Options info'				=> 'To find and set the default location view the main map, and you will see a link at the bottom of the page. Set the map to the location you want, then click the link. You will be sent here with the info already entered, then just hit save.',
+	'Options info'				=> 'To find and set the default location, view the <a href="'.$pun_config['o_base_url'].'/usermap.php">main map</a>. You will see a link at the bottom of the page. Set the map to the location you want, then click the link. You will be sent here with the info already entered, then just click Save.',
 	'Default latitude'			=> 'Default latitude',
 	'Default longitude'			=> 'Default longitude',
 	'Default zoom'				=> 'Default zoom',
@@ -34,11 +34,11 @@ $lang_usermap_admin = array(
 	'Map height'				=> 'Map height',
 	'Map height info'			=> 'The height of the map in pixles (between 300 and 1,000). The default is 500.',
 	'Fit map zoom'				=> 'Fit map zoom',
-	'Fit map zoom info'			=> 'The map will automaticly set its location and zoom to make sure every marker is shown. Will overwrite the above settings.',
+	'Fit map zoom info'			=> 'The map will automaticly set its location and zoom to make sure every marker is shown. This will override the above settings.',
 	'Save options'				=> 'Save options',
 
 	// pre group options
 	'Groups'					=> 'Groups',
-	'Groups info'				=> 'Please note that this may look like the normal group options, its not. You can not delete or change any options other then ones related to the user map mod.',
+	'Groups info'				=> 'Please note that this may look like the normal group options, it\'s not. You can not delete or change any options other then options related to the user map mod.',
 	'Edit'						=> 'Edit',
 );

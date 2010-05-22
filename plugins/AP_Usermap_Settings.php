@@ -190,7 +190,7 @@ else
 							<p><?php echo $lang_usermap_admin['Options info']?></p>
 							<table class='aligntop' cellspacing='0'>
 								<tr>
-									<th scope='row'><?php echo $lang_usermap_admin['Default longitude']?></th>
+									<th scope='row'><?php echo $lang_usermap_admin['Default latitude']?></th>
 									<td>
 										<input type='text' name='form[um_default_lat]' size='35' maxlength='255' value='<?php echo pun_htmlspecialchars((isset($_GET['lat']) && is_numeric($_GET['lat']))? $_GET['lat']: $pun_config['o_um_default_lat']) ?>' />
 									</td>

@@ -269,7 +269,7 @@ if (!defined('PUN_SEARCH_MAX_WORD'))
 
 // Usermap by Gizzmo - START
 // Need it here because its uesed in the main menu
-if (file_exists(PUN_ROOT.'/usermap/lang/'.$pun_user['language'].'.php'))
+if (file_exists(PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php'))
 	require PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php';
 else
 	require PUN_ROOT.'usermap/lang/English.php';
