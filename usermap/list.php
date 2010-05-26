@@ -68,7 +68,7 @@ while ($user = $db->fetch_assoc($result))
 			$posts_field = forum_number_format($user['num_posts']);
 
 		if ($pun_user['g_search'] == '1')
-			$posts_field .= (($posts_field != '') ? ' - ' : '').'<a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a>';
+			$posts_field .= (($posts_field != '') ? ' - ' : '').'<a href="search.php?action=show_user&amp;user_id='.$user['id'].'">'.$lang_profile['Show posts'].'</a>';
 
 		$last_post = format_time($user['last_post']);
 
