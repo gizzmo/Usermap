@@ -37,68 +37,58 @@ while ($user = $db->fetch_assoc($result))
 {
 	if (isset($id) || isset($_GET['kml']))
 	{
+		$user_data = array();
+
 		if ($pun_config['o_avatars'] == '1')
 		{
-			$avatar_field = generate_avatar_markup($user['id']);
-
-			if ($avatar_field == '')
-				$avatar_field = $lang_profile['No avatar'];
+			$avatar_field = generate_avatar_markup($id);
+			if ($avatar_field != '')
+			{
+				$user_data[] = '<dt>'.$lang_profile['Avatar'].'</dt>';
+				$user_data[] = '<dd>'.$avatar_field.'</dd>';
+			}
 		}
 
 		if ($user['url'] != '')
 		{
-			$user['url'] = pun_htmlspecialchars($user['url']);
-
-			if ($pun_config['o_censoring'] == '1')
-				$user['url'] = censor_words($user['url']);
-
-			$url = '<span class="website"><a href="'.$user['url'].'">'.$user['url'].'</a></span>';
+			$user['url'] = pun_htmlspecialchars(($pun_config['o_censoring'] == '1') ? censor_words($user['url']) : $user['url']);
+			$user_data[] = '<dt>'.$lang_profile['Website'].'</dt>';
+			$user_data[] = '<dd><span class="website"><a href="'.$user['url'].'">'.$user['url'].'</a></span></dd>';
 		}
-		else
-			$url = $lang_profile['Unknown'];
 
-		if ($user['signature'] != '')
+		if ($user['num_posts'] > 0)
 		{
-			require PUN_ROOT.'include/parser.php';
-			$parsed_signature = parse_signature($user['signature']);
+			$posts_field = '';
+			if ($pun_config['o_show_post_count'] == '1' || $pun_user['is_admmod'])
+				$posts_field = forum_number_format($user['num_posts']);
+
+			if ($pun_user['g_search'] == '1')
+				$posts_field .= (($posts_field != '') ? ' - ' : '').'<a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a>';
+
+			if ($posts_field != '')
+			{
+				$user_data[] = '<dt>'.$lang_common['Posts'].'</dt>';
+				$user_data[] = '<dd>'.$posts_field.'</dd>';
+			}
+
+			$user_data[] = '<dt>'.$lang_common['Last post'].'</dt>';
+			$user_data[] = '<dd>'.format_time($user['last_post']).'</dd>';
 		}
 
-		$posts_field = '';
-		if ($pun_config['o_show_post_count'] == '1' || $pun_user['is_admmod'])
-			$posts_field = forum_number_format($user['num_posts']);
+		$user_data[] = '<dt>'.$lang_common['Registered'].'</dt>';
+		$user_data[] = '<dd>'.format_time($user['registered'], true).'</dd>';
 
-		if ($pun_user['g_search'] == '1')
-			$posts_field .= (($posts_field != '') ? ' - ' : '').'<a href="search.php?action=show_user&amp;user_id='.$user['id'].'">'.$lang_profile['Show posts'].'</a>';
-
-		$last_post = format_time($user['last_post']);
 
 		// the html
 		ob_start();
 ?>
 <dl>
-<?php if ($pun_config['o_avatars'] == '1'): ?>
-	<dt><?php echo $lang_profile['Avatar'] ?></dt>
-	<dd><?php echo $avatar_field ?></dd>
-<?php endif; if ($pun_config['o_signatures'] == '1'): ?>
-	<dt><?php echo $lang_profile['Signature'] ?></dt>
-	<dd><?php echo isset($parsed_signature) ? '<div class="postsignature postmsg">'.$parsed_signature.'</div>' : $lang_profile['No sig']; ?></dd>
-<?php endif;?>
-	<dt><?php echo $lang_profile['Website'] ?></dt>
-	<dd><?php echo $url ?></dd>
-<?php if ($posts_field != ''): ?>
-	<dt><?php echo $lang_common['Posts'] ?></dt>
-	<dd><?php echo $posts_field ?></dd>
-<?php endif; ?>
-	<dt><?php echo $lang_common['Last post'] ?></dt>
-	<dd><?php echo $last_post ?></dd>
-	<dt><?php echo $lang_common['Registered'] ?></dt>
-	<dd><?php echo format_time($user['registered'], true) ?></dd>
+	<?php echo implode("\n\t", $user_data)."\n"?>
 </dl>
 <?php
 		$html = str_replace(array("\t","\n"),'',trim(ob_get_contents()));
 		ob_end_clean();
 	}
-
 	// json for the info window
 	$json[]	= array(
 		'id' 		=> $user['id'],
