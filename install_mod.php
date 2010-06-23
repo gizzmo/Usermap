@@ -70,7 +70,8 @@ function restore()
 	/* Users */
 	$db->query('ALTER TABLE `'.$db->prefix.'users`
 		DROP `um_lat`,
-		DROP `um_lng`
+		DROP `um_lng`,
+		DROP `um_scrollwheel`
 	') or error('Unable to remove the `um_lat` and `um_lng` fields from the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
 
 	/* Group */
