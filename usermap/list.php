@@ -39,6 +39,7 @@ while ($user = $db->fetch_assoc($result))
 	{
 		$user_data = array();
 
+		// Avatar
 		if ($pun_config['o_avatars'] == '1')
 		{
 			$avatar_field = generate_avatar_markup($id);
@@ -49,6 +50,12 @@ while ($user = $db->fetch_assoc($result))
 			}
 		}
 
+		// Title
+		$user_title_field = get_title($user);
+		$user_data[] = '<dt>'.$lang_common['Title'].'</dt>';
+		$user_data[] = '<dd>'.(($pun_config['o_censoring'] == '1') ? censor_words($user_title_field) : $user_title_field).'</dd>';
+
+		// Website
 		if ($user['url'] != '')
 		{
 			$user['url'] = pun_htmlspecialchars(($pun_config['o_censoring'] == '1') ? censor_words($user['url']) : $user['url']);
@@ -56,6 +63,7 @@ while ($user = $db->fetch_assoc($result))
 			$user_data[] = '<dd><span class="website"><a href="'.$user['url'].'">'.$user['url'].'</a></span></dd>';
 		}
 
+		// Posts
 		if ($user['num_posts'] > 0)
 		{
 			$posts_field = '';
@@ -75,6 +83,7 @@ while ($user = $db->fetch_assoc($result))
 			$user_data[] = '<dd>'.format_time($user['last_post']).'</dd>';
 		}
 
+		// Registered
 		$user_data[] = '<dt>'.$lang_common['Registered'].'</dt>';
 		$user_data[] = '<dd>'.format_time($user['registered'], true).'</dd>';
 
