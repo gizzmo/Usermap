@@ -3,9 +3,9 @@
 ********************************************************************
 Name:          Usermap
 Author:        Gizzmo <justgiz@gmail.com>
-Version:       1.0-rc1
-Release date:  2010-05-08
-Works on:      1.4-rc3
+Version:       1.0
+Release date:  June 25th 2010
+Works on:      1.4
 ********************************************************************
 DISCLAIMER:
 	Mods are not officially supported by FluxBB. Installation
