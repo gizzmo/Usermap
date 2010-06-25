@@ -174,7 +174,7 @@ UserMap.main = {
 						// request the info window
 						$.getJSON('usermap/list.php?id='+item.id, function(data)
 						{
-							UserMap.main.infowindowCache[item.id] = '<div id="infowindow"><h2><a href="profile.php?id='+item.id+'">'+item.name+'</a></h2><div class="box"><div class="inbox">'+data[0].html+'</div></div></div>';
+							UserMap.main.infowindowCache[item.id] = '<div id="infowindow">'+data[0].html+'</div>';
 							infowindow.setContent(UserMap.main.infowindowCache[item.id]);
 							infowindow.open(UserMap.theMap,marker);
 						});

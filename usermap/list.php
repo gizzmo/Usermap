@@ -37,6 +37,12 @@ while ($user = $db->fetch_assoc($result))
 {
 	if (isset($id) || isset($_GET['kml']))
 	{
+		// Username
+		if ($pun_user['g_view_users'] == '1')
+			$username = '<a href="profile.php?id='.$user['poster_id'].'">'.pun_htmlspecialchars($user['username']).'</a>';
+		else
+			$username = pun_htmlspecialchars($user['username']);
+
 		$user_data = array();
 
 		// Avatar
@@ -91,9 +97,14 @@ while ($user = $db->fetch_assoc($result))
 		// the html
 		ob_start();
 ?>
-<dl>
-	<?php echo implode("\n\t", $user_data)."\n"?>
-</dl>
+<h2><?php echo $username?></h2>
+<div class="box">
+	<div class="inbox">
+		<dl>
+			<?php echo implode("\n\t", $user_data)."\n"?>
+		</dl>
+	</div>
+</div>
 <?php
 		$html = str_replace(array("\t","\n"),'',trim(ob_get_contents()));
 		ob_end_clean();
