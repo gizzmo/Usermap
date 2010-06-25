@@ -39,6 +39,6 @@ $lang_usermap_admin = array(
 
 	// pre group options
 	'Groups'					=> 'Groups',
-	'Groups info'				=> 'Please note that this may look like the normal group options, it\'s not. You can not delete or change any options other then options related to the user map mod.',
+	'Groups info'				=> 'Please note that this may look like the normal group options, it\'s not. You can not delete or change any options other than options related to the user map mod.',
 	'Edit'						=> 'Edit',
 );
