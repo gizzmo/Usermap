@@ -43,7 +43,9 @@ function install()
 		ADD `g_um_icon` VARCHAR(50) NOT NULL DEFAULT \'white.png\'
 	') or error('Unable to add the `g_um_view_map`, `g_um_add_to_map` and `g_um_icon` fields to the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
 
-	// $db->query('') or error('', __FILE__, __LINE__, $db->error());
+	/* Set the default icons for the groups */
+	$db->query('UPDATE `'.$db->prefix.'groups` SET `g_um_icon` = \'red.png\' WHERE `'.$db->prefix.'g_id` = 1') or error('Unable to update admin group.', __FILE__, __LINE__, $db->error());
+	$db->query('UPDATE `'.$db->prefix.'groups` SET `g_um_icon` = \'blue.png\' WHERE `'.$db->prefix.'g_id` = 2') or error('Unable to update moderator group.', __FILE__, __LINE__, $db->error());
 
 	// update cache, we added config options
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
