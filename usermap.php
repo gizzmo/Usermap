@@ -55,7 +55,7 @@ require PUN_ROOT.'header.php';
 		<div class='box' id='user_map_canvas'></div>
 <?php if ($pun_user['g_id'] == PUN_ADMIN): ?>		<div class='box'>
 			<div class='inbox'>
-				<p><a id="um_admin" href="<?php echo $pun_config['o_base_url'].'/admin_loader.php?plugin=AP_Usermap_Settings.php&lat='.$pun_config['o_um_default_lat'].'&amp;lng='.$pun_config['o_um_default_lng'].'&amp;z='.$pun_config['o_um_default_zoom']?>">Save as default location</a> (this is here until i get a context menu built)</p>
+				<p><a id="um_admin" href="<?php echo $pun_config['o_base_url'].'/admin_loader.php?plugin=AP_Usermap_Settings.php&lat='.$pun_config['o_um_default_lat'].'&amp;lng='.$pun_config['o_um_default_lng'].'&amp;z='.$pun_config['o_um_default_zoom']?>"><?php echo $lang_usermap['Save as default location']?></a><?php echo $lang_usermap['temptip']?></p>
 			</div>
 		</div>
 <?php endif;?>	</div>

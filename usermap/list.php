@@ -39,7 +39,7 @@ while ($user = $db->fetch_assoc($result))
 	{
 		// Username
 		if ($pun_user['g_view_users'] == '1')
-			$username = '<a href="profile.php?id='.$user['poster_id'].'">'.pun_htmlspecialchars($user['username']).'</a>';
+			$username = '<a href="'.$pun_config['o_base_url'].'/profile.php?id='.$user['id'].'">'.pun_htmlspecialchars($user['username']).'</a>';
 		else
 			$username = pun_htmlspecialchars($user['username']);
 
