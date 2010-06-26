@@ -13,7 +13,7 @@ $lang_usermap_admin = array(
 
 	'Cur group'					=> '%s options and permissions',
 	'User map icon'				=> 'User map icon',
-	'User map icon info'		=> 'The icon that will represent users in this group on the user map.',
+	'User map icon info'		=> 'The icon to represent users in this group on the user map.',
 	'User map viewing'			=> 'View user map',
 	'User map viewing info'		=> 'Allow users in this group to view the user map.',
 	'User map add to'			=> 'Add to user map',
@@ -21,8 +21,8 @@ $lang_usermap_admin = array(
 
 	// global options
 	'lat lng error'				=> 'The latitude or longitude that was specfied is invalid.',
-	'zoom error'				=> 'The zoom level that was specfied was invalid.',
-	'height error'				=> 'The user map height that was specfied is a invalid height.',
+	'zoom error'				=> 'The zoom level that was specified is invalid.',
+	'height error'				=> 'The user map height that was specified is an invalid height.',
 	'Options updated redirect'	=> 'Options updated. Redirecting …',
 
 	'Options'					=> 'Options',
@@ -32,9 +32,9 @@ $lang_usermap_admin = array(
 	'Default zoom'				=> 'Default zoom',
 	'Default zoom info'			=> 'Zoom level 0 is the farthest and 19 is the closest.',
 	'Map height'				=> 'Map height',
-	'Map height info'			=> 'The height of the map in pixles (between 300 and 1,000). The default is 500.',
+	'Map height info'			=> 'The height of the map in pixels (between 300 and 1,000). The default is 500.',
 	'Fit map zoom'				=> 'Fit map zoom',
-	'Fit map zoom info'			=> 'The map will automaticly set its location and zoom to make sure every marker is shown. This will override the above settings.',
+	'Fit map zoom info'			=> 'The map will automatically set its location and zoom to make sure every marker is shown. This will override the above settings.',
 	'Save options'				=> 'Save options',
 
 	// pre group options

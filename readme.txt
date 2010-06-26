@@ -29,19 +29,19 @@ AFFECTED DATABASE:
 	groups
 
 NOTES:
-	- All options and group permissions settings are found though
+	- All options and group permissions settings are found through
 	  the "Usermap Settings" plugin, link found at the bottom of the
 	  admin menu.
 
-	- Each group has a set of permissions. They have permiission to
+	- Each group has a set of permissions. They have permission to
 	  view the map (good for not allowing guests viewing the map).
 	  They also have permission to add their location to the map
-	  (good for new memebers, so the map doesnt get spamed).
+	  (good for new members, so the map doesn't get spammed).
 
-	- Each group also can have a icon for the map, so they stand out
+	- Each group also can have an icon for the map, so they stand out
 	  when others view the map.
 
-	- If you want to you can view your users location in Google Earch,
+	- If you want to you can view your users location in Google Earth,
 	  by downloading the file here: <YourSiteUrl>/usermap/list.php?kml
 	  Access to this is also protected by the group permissions.
 
