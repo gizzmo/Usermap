@@ -30,7 +30,7 @@ if (isset($_GET['id']))
 else
 	$extra_sql = '';
 
-$result = $db->query('SELECT u.*, g.g_um_icon FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE'.$extra_sql.' u.um_lat IS NOT NULL AND u.um_lng IS NOT NULL AND g.g_um_add_to_map = \'1\' ORDER BY username ASC') or um_error('Unable to marker list.', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.*, g.g_id, g.g_user_title, g.g_um_icon FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE'.$extra_sql.' u.um_lat IS NOT NULL AND u.um_lng IS NOT NULL AND g.g_um_add_to_map = \'1\' ORDER BY username ASC') or um_error('Unable to marker list.', __FILE__, __LINE__, $db->error());
 
 $json = array();
 while ($user = $db->fetch_assoc($result))
