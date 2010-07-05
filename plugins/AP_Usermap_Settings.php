@@ -142,7 +142,7 @@ else if (isset($_POST['save_options']))
 	if (!is_numeric($form['um_default_lat']) || !is_numeric($form['um_default_lng']))
 		message($lang_usermap_admin['lat lng error']);
 
-	// make sure the zoom is less then 18 and is numberic
+	// make sure the zoom is less then 19 and is numberic
 	if (!is_numeric($form['um_default_zoom']) || ($form['um_default_zoom'] > 19 || $form['um_default_zoom'] < 0))
 		message($lang_usermap_admin['zoom error']);
 
