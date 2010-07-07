@@ -125,30 +125,24 @@ $(function(){
 else if (isset($_POST['save_options']))
 {
 	$form = array(
-		'um_default_lat'		=> pun_trim($_POST['form']['um_default_lat']),
-		'um_default_lng'		=> pun_trim($_POST['form']['um_default_lng']),
-		'um_default_zoom'		=> pun_trim($_POST['form']['um_default_zoom']),
-		'um_height'				=> pun_trim($_POST['form']['um_height']),
+		'um_default_lat'		=> floatval($_POST['form']['um_default_lat']),
+		'um_default_lng'		=> floatval($_POST['form']['um_default_lng']),
+		'um_default_zoom'		=> intval($_POST['form']['um_default_zoom']),
+		'um_height'				=> intval($_POST['form']['um_height']),
 		'um_fit_map'			=> $_POST['form']['um_fit_map'] != '1' ? '0' : '1',
 	);
 
 	// if varibles were empty use the default
-	if (($form['um_default_lng'] == '') && ($form['um_default_lat'] == '')) $form['um_default_zoom'] = '0';
-	if ($form['um_default_lat'] == '') $form['um_default_lat'] = '0';
-	if ($form['um_default_lng'] == '') $form['um_default_lng'] = '0';
-	if ($form['um_height'] == '') $form['um_default_lng'] = '500';
+	if (($form['um_default_lng'] == '') && ($form['um_default_lat'] == '')) $form['um_default_zoom'] = 0;
+	if ($form['um_default_lat'] == '') $form['um_default_lat'] = 0;
+	if ($form['um_default_lng'] == '') $form['um_default_lng'] = 0;
+	if ($form['um_height'] == '') $form['um_default_lng'] = 500;
 
-	// lat or lng is not numeric and not empty
-	if (!is_numeric($form['um_default_lat']) || !is_numeric($form['um_default_lng']))
-		message($lang_usermap_admin['lat lng error']);
-
-	// make sure the zoom is less then 19 and is numberic
-	if (!is_numeric($form['um_default_zoom']) || ($form['um_default_zoom'] > 19 || $form['um_default_zoom'] < 0))
-		message($lang_usermap_admin['zoom error']);
-
-	// height is not numeric, is not empty and between 300 and 1000
-	if (!is_numeric($form['um_height']) || (($form['um_height'] < 300) || ($form['um_height'] > 1000)))
-		message($lang_usermap_admin['height error']);
+	// Make sure the height is between 30 and 1000
+	if ($form['um_height'] < 300)
+		$form['um_height'] = 300;
+	else if ($form['um_height'] > 1000)
+		$form['um_height'] = 1000;
 
 	foreach ($form as $key => $input)
 	{

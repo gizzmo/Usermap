@@ -20,9 +20,6 @@ $lang_usermap_admin = array(
 	'User map add to info'		=> 'Allow users in this group to add their location to the user map.',
 
 	// global options
-	'lat lng error'				=> 'The latitude or longitude that was specfied is invalid.',
-	'zoom error'				=> 'The zoom level that was specified is invalid.',
-	'height error'				=> 'The user map height that was specified is an invalid height.',
 	'Options updated redirect'	=> 'Options updated. Redirecting …',
 
 	'Options'					=> 'Options',
