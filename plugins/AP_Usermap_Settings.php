@@ -19,7 +19,7 @@ else
 	require PUN_ROOT.'usermap/lang/English_admin.php';
 
 // This plugin's url
-$plugin_url = $pun_config['o_base_url'].'/admin_loader.php?plugin=AP_Usermap_Settings.php';
+$plugin_url = 'admin_loader.php?plugin=AP_Usermap_Settings.php';
 
 // update group
 if (isset($_POST['save_group']))
@@ -176,7 +176,7 @@ else
 	<div id='usermap_plugin' class='blockform'>
 		<h2><span><?php echo $lang_usermap_admin['User map settings']?></span></h2>
 		<div class='box'>
-			<form id='example' method='post' action='<?php echo pun_htmlspecialchars($plugin_url) ?>'>
+			<form id='usermap_options' method='post' action='<?php echo $plugin_url ?>'>
 				<div class='inform' id='um'>
 					<fieldset>
 						<legend><?php echo $lang_usermap_admin['Options']?></legend>
