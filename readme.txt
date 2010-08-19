@@ -117,7 +117,7 @@ $result = $db->query('SELECT u.um_lat, u.um_lng, u.um_scrollwheel, u.username, u
 
 
 ********************************************************************
-#-------[ 6. Find (line: 1671) ]
+#-------[ 6. Find (line: 1724) ]
 
 			</form>
 		</div>

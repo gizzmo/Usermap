@@ -24,6 +24,8 @@ $plugin_url = 'admin_loader.php?plugin=AP_Usermap_Settings.php';
 // update group
 if (isset($_POST['save_group']))
 {
+	confirm_referrer($plugin_url);
+
 	// Is this the admin group? (special rules apply)
 	$is_admin_group = (isset($_POST['group_id']) && $_POST['group_id'] == PUN_ADMIN) ? true : false;
 
@@ -124,6 +126,8 @@ $(function(){
 
 else if (isset($_POST['save_options']))
 {
+	confirm_referrer($plugin_url);
+
 	$form = array(
 		'um_default_lat'		=> floatval($_POST['form']['um_default_lat']),
 		'um_default_lng'		=> floatval($_POST['form']['um_default_lng']),
