@@ -107,6 +107,9 @@
 			});
 		});
 
+		// The userlist ul
+		var ul = $(document.createElement('ul'));
+
 		// grab the userlist json
 		$.getJSON('usermap/list.php', function(data)
 		{
@@ -156,14 +159,10 @@
 						.filter('#u'+item.id).addClass('isactive');
 				});
 
-				// if the userlist ul hasnt been created, do it now
-				if ($('#usermap_userlist .inbox'))
-					$('#usermap_userlist .inbox').html(document.createElement('ul'));
-
 				// create the item html for the userlist
 				var li = $(document.createElement('li'))
 					.attr('id', 'u'+item.id)
-					.appendTo($('#usermap_userlist .inbox ul'));
+					.appendTo(ul);
 
 				$(document.createElement('a'))
 					.attr('href', '#u'+item.id).html(item.name)
@@ -187,6 +186,10 @@
 						return false;
 					});
 			});
+
+			// if there is a list of users create the list
+			if (ul.find('li').length)
+				$('#usermap_userlist .inbox').html(ul);
 
 			// set the map to fit the bounds?
 			if (data.length != 0 && UserMap.defaults.fitzoom !== undefined)

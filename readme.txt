@@ -141,9 +141,8 @@ $result = $db->query('SELECT u.um_lat, u.um_lng, u.um_scrollwheel, u.username, u
 
 
 ********************************************************************
-#-------[ 9. Find (line 1774) ]
+#-------[ 9. Find (line 1775) ]
 
-			</form>
 		</div>
 	</div>
 <?php
@@ -278,8 +277,9 @@ include/functions.php
 
 
 ********************************************************************
-#-------[ 14. Find (line: ) ]
+#-------[ 14. Find (line: 516) ]
 
+		<div class="box">
 			<div class="inbox">
 				<ul>
 					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
