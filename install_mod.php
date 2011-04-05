@@ -4,13 +4,13 @@
 
 // Some info about your mod.
 $mod_title			= 'Usermap';
-$mod_version		= '1.0';
+$mod_version		= '1.1';
 $release_date		= '2010-05-08';
 $author				= 'Gizzmo';
 $author_email		= 'justgiz@gmail.com';
 
-// Versions of FluxBB this mod was created for. A warning will be displayed, if versions do not match
-$fluxbb_versions	= array('1.4.0');
+// Versions of FluxBB this mod was created for. Minor variations (i.e. 1.2.4 vs 1.2.5) will be allowed, but a warning will be displayed.
+$fluxbb_versions	= array('1.4.5');
 
 // Set this to false if you haven't implemented the restore function (see below)
 $mod_restore		= true;
@@ -96,7 +96,6 @@ function restore()
 
 // DO NOT EDIT ANYTHING BELOW THIS LINE!
 
-
 // Circumvent maintenance mode
 define('PUN_TURN_OFF_MAINT', 1);
 define('PUN_ROOT', './');
@@ -154,7 +153,7 @@ else if (isset($_POST['form_sent']))
 			<h2><span>Installation successful</span></h2>
 			<div class="box">
 				<div class="inbox">
-					<p>Your database has been successfully prepared for <?php echo pun_htmlspecialchars($mod_title) ?>. See readme.txt for further instructions.</p>
+					<p>Your database has been successfully prepared for <?php echo pun_htmlspecialchars($mod_title) ?>.</p>
 				</div>
 			</div>
 		</div>
@@ -171,7 +170,7 @@ else if (isset($_POST['form_sent']))
 			<h2><span>Restore successful</span></h2>
 			<div class="box">
 				<div class="inbox">
-					<p>Your database has been successfully restored. Dont forget to undo the changes you did.</p>
+					<p>Your database has been successfully restored. Dont forget to undo the file changes you did.</p>
 				</div>
 			</div>
 		</div>

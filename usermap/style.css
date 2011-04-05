@@ -4,7 +4,6 @@
  */
 
 #user_map_canvas {
-	background: url('img/loading.png') no-repeat center 100px;
 	margin-bottom:19px;
 }
 
@@ -15,11 +14,9 @@
 
 /* userlist */
 #punusermap #usermap_userlist li a {
+	padding: 4px 0 4px 24px;
 	background-repeat:no-repeat;
 	background-position:left center;
-}
-#punusermap #usermap_userlist a {
-	padding: 9px 6px 3px 22px;
 }
 
 /* admin option. align the icon correctly */
@@ -28,19 +25,19 @@
 }
 
 /* the info window */
-#infowindow  dl {
+#infoWindow dl {
 	border-style: solid none none none;
 	border-width: 1px;
 	border-color: #dfe6ee;
 	margin: 7px 0;
 	padding: 0;
 }
-#infowindow dt {
+#infoWindow dt {
 	padding: 5px 0;
 	float:left;
 	width: 8em;
 }
-#infowindow dd {
+#infoWindow dd {
 	border-style: none none solid none;
 	border-width: 1px;
 	border-color: #dfe6ee;

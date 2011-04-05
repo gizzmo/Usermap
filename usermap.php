@@ -17,24 +17,51 @@ if ($pun_user['g_um_view_map'] == '0')
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;
 
 $page_head = array(
-	'css'		=> '<link rel="stylesheet" type="text/css" media="screen" href="usermap/style.css" />',
-	'jquery'	=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>',
+	// The Libs
+	'jquery'	=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>',
 	'googleapi'	=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>',
-	'jscript'	=> '<script type="text/javascript" src="usermap/script.js"></script>'."\n".
-'<script type="text/javascript">
+
+	// Context Menu
+	'contextmenuJS' => '<script src="usermap/contextMenu/code.js"></script>',
+	'contextmenuCSS' => '<link href="usermap/contextMenu/style.css" rel="stylesheet" type="text/css">',
+
+	// The Core
+	'css'	=> '<link rel="stylesheet" type="text/css" media="screen" href="usermap/style.css" />',
+	'core'	=> '<script type="text/javascript" src="usermap/script.js"></script>'
+);
+
+// code
+ob_start();
+?>
+<script type="text/javascript">
 $(function(){
 	UserMap.defaults = {
-		latlng:  ['.$pun_config['o_um_default_lat'].','.$pun_config['o_um_default_lng'].'],
-		zoom: '.$pun_config['o_um_default_zoom'].',
-		height: '.$pun_config['o_um_height'].',
-		fitzoom: '.$pun_config['o_um_fit_map'].',
-		scrollwheel: '.$pun_user['um_scrollwheel'].'
-	};'.(isset($id)? '
-	UserMap.options = {id:'.$id.'};':'').'
-	UserMap.main.init();
+		center:  [<?php echo $pun_config['o_um_default_lat'].','.$pun_config['o_um_default_lng']?>],
+		zoom: <?php echo $pun_config['o_um_default_zoom']?>,
+		height: <?php echo $pun_config['o_um_height']?>,
+		scrollwheel: <?php echo ($pun_user['um_scrollwheel'])? 'true': 'false'?>,
+	};
+<?php
+	$options = array();
+
+	if (isset($id))
+		$options['id'] = $id;
+
+	if ($pun_user['g_id'] == PUN_ADMIN)
+		$options['saveLoc'] = array(
+			$lang_usermap['Save as default location'],
+			$pun_config['o_base_url'],
+		);
+?>
+
+	new UserMap(<?php if (!empty($options)) echo json_encode($options)?>).main();
 });
-</script>'
-);
+</script>
+
+<?php
+$page_head[] = trim(ob_get_contents());
+ob_end_clean();
+
 
 $page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_usermap['User map']);
 define('PUN_ACTIVE_PAGE', 'User map');
@@ -53,12 +80,7 @@ require PUN_ROOT.'header.php';
 	<div class='block'>
 		<h2><span><?php echo $lang_usermap['User map']?></span></h2>
 		<div class='box' id='user_map_canvas'></div>
-<?php if ($pun_user['g_id'] == PUN_ADMIN): ?>		<div class='box'>
-			<div class='inbox'>
-				<p><a id="um_admin" href="<?php echo $pun_config['o_base_url'].'/admin_loader.php?plugin=AP_Usermap_Settings.php&lat='.$pun_config['o_um_default_lat'].'&amp;lng='.$pun_config['o_um_default_lng'].'&amp;z='.$pun_config['o_um_default_zoom']?>"><?php echo $lang_usermap['Save as default location']?></a><?php echo $lang_usermap['temptip']?></p>
-			</div>
-		</div>
-<?php endif;?>	</div>
+	</div>
 </div>
 <?php
 

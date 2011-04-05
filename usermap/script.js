@@ -6,130 +6,108 @@
 /**
  * The base map object
  */
-var UserMap = {
-	/**
-	 * The Main Google Map Object
-	 */
-	theMap: null,
+(function(undefined){
+
+	// Shorthand stuff!!
+	var g = google.maps;
 
 	/**
-	 * The default settings for the map
+	 * The Core Map
 	 */
-	defaults: {},
-
-	/**
-	 * The provided options
-	 */
-	options: {},
-
-	/**
-	 * Set up the main map.
-	 */
-	init: function()
+	function UserMap(options)
 	{
-		// extend the options with the defaults
-		var opts = $.extend({}, UserMap.defaults, UserMap.options);
+		// Put the options onto the object
+		this.options = options || {};
 
-		// the map canvas
-		var mapCanvas = $('#user_map_canvas');
+		// Extend the default options with the provided options
+		var opts = $.extend({}, UserMap.defaults, this.options);
 
-		// make the map canvas the correct height
-		mapCanvas.height(opts.height);
+		// The map canvas
+		var canvas = $('#user_map_canvas');
 
-		UserMap.theMap = new google.maps.Map(mapCanvas[0], {
-			center: new google.maps.LatLng(opts.latlng[0], opts.latlng[1]),
+		// Make the map canvas the correct height
+		canvas.height(opts.height);
+
+		this.theMap = new g.Map(canvas[0], {
+			center: new g.LatLng(opts.center[0],opts.center[1]),
 			zoom: opts.zoom,
-			MapTypeId: google.maps.MapTypeId.ROADMAP,
+			mapTypeId: g.MapTypeId.ROADMAP,
 			scrollwheel: opts.scrollwheel
 		});
-	},
 
-	/**
-	 * A simpler way to create a icon
-	 */
-	makeIcon: function(img,size,anchor)
-	{
-		// defaults
-		var img = img || 'icons/white.png',
-			size = size || [20, 20],
-			anchor = anchor || [4, 17];
+		if ( opts.contextMenu !== false )
+		{
+			// try to create the menu, incase it wasnt included
+			try {
 
-		// return the 'MarkerImage'
-		return new google.maps.MarkerImage(
-			'usermap/img/'+img,
-			new google.maps.Size(size[0],size[1]),
-			new google.maps.Point(0,0),
-			new google.maps.Point(anchor[0],anchor[1])
-		);
-	},
+				// Add the context menu
+				var menu = new contextMenu({map:this.theMap});
 
-	/**
-	 * A easy way to create the shadow image for markers
-	 */
-	makeShadow: function()
-	{
-		return UserMap.makeIcon('shadow.png', [35,20],[9,14]);
+				// Add some default items to the menu
+				menu.addItem('Zoom In', function(map, latLng){
+					map.setZoom( map.getZoom() + 1);
+					map.panTo( latLng );
+				});
+
+				menu.addItem('Zoom Out', function(map, latLng){
+					map.setZoom( map.getZoom() - 1 );
+					map.panTo( latLng );
+				});
+
+				menu.addSep();
+
+				menu.addItem('Center Here', function(map, latLng){
+					map.panTo( latLng );
+				});
+
+				// Add the menu to the object
+				this.contextMenu = menu;
+			}
+			catch(e)
+			{
+				if (console)
+					console.log(e);
+			}
+		}
 	}
-};
 
-/**
- * The Main Map
- */
-UserMap.main = {
-
-	/**
-	 * Cache
-	 */
-	markers: [],
-	infowindowCache: [],
-
-	/**
-	 * When you click the username on the list
-	 */
-	click: function(i)
+	// Set up only thinsg that effect the Main Map
+	UserMap.prototype.main = function()
 	{
-		var marker = UserMap.main.markers[i];
-		if (typeof marker !== 'undefined')
-			google.maps.event.trigger(marker,'click');
-	},
-
-	/**
-	 * Set everything up
-	 */
-	init: function()
-	{
-		// init the map.
-		UserMap.init();
+		var self = this;
 
 		// Make the user list scroll
-		$('#punusermap #usermap_userlist .box').css('max-height',UserMap.defaults.height);
+		$('#punusermap #usermap_userlist .box').css('max-height', UserMap.defaults.height);
 
-		// admin save location link
-		$('#um_admin').click(function(){
-			var lat = UserMap.theMap.getCenter().lat(),
-				lng = UserMap.theMap.getCenter().lng(),
-				zoom = UserMap.theMap.getZoom(),
-				href = $(this).attr('href');
+		// Admin 'save location' menu item
+		if (this.options.saveLoc)
+		{
+			this.contextMenu.addSep();
+			this.contextMenu.addItem(this.options.saveLoc[0], function()
+			{
+				var map = self.theMap,
+					lat =  map.getCenter().lat(),
+					lng =  map.getCenter().lng(),
+					zoom = map.getZoom();
 
-			$(this).attr('href',href.replace(/\&(.*)$/, '&lat='+lat+'&lng='+lng+'&z='+zoom));
-		});
+				window.location = self.options.saveLoc[1]+'/admin_loader.php?plugin=AP_Usermap_Settings.php&lat='+lat+'&lng='+lng+'&z='+zoom;
+			});
+		}
 
-		// set up some vars
-		var list = [],
-			bounds = new google.maps.LatLngBounds(),
-			infowindow = new google.maps.InfoWindow();
+		this.infoWindowCache = [];
+
+		var bounds = new g.LatLngBounds(),
+			infoWindow = new g.InfoWindow();
 
 		// close the infowindow when a few things happen
-		function closeinfowindow()
-		{
-			$('#usermap_userlist li.isactive').removeClass('isactive');
-			infowindow.close();
-		}
-		google.maps.event.addListener(UserMap.theMap, 'click', closeinfowindow);
-		google.maps.event.addListener(UserMap.theMap, 'rightclick', closeinfowindow);
-		google.maps.event.addListener(UserMap.theMap, 'zoom_changed', closeinfowindow);
+		$.each('click rightclick zoom_changed maptypeid_changed'.split(' '), function(i,name){
+			g.event.addListener(self.theMap, name, function(){
+				$('#usermap_userlist li').removeClass('isactive');
+				infoWindow.close();
+			});
+		});
 
-		// grab the userlist json!
+		// grab the userlist json
 		$.getJSON('usermap/list.php', function(data)
 		{
 			// check for errors
@@ -139,180 +117,249 @@ UserMap.main = {
 			// look though the markers
 			$.each(data, function(i,item)
 			{
-				var point = new google.maps.LatLng(item.point[0],item.point[1]);
+				var point = new g.LatLng(item.point[0],item.point[1]);
 
-				//extend the bounds
+				// extend the bounds
 				bounds.extend(point);
 
 				// make the marker
-				var marker = new google.maps.Marker({
-					map: UserMap.theMap,
+				var marker = new g.Marker({
+					map: self.theMap,
 					position: point,
 					icon: UserMap.makeIcon('icons/'+item.icon),
 					shadow: UserMap.makeShadow(),
 					title: item.name
 				});
 
-				// save the marker to the userlist array
-				list.push('<li id="u'+item.id+'"><a style="background-image:url(usermap/img/icons/'+item.icon+')" href="javascript:UserMap.main.click('+item.id+');">'+item.name+'</a></li>');
-				UserMap.main.markers[item.id] = marker;
-
 				// info window listener
-				google.maps.event.addListener(marker, 'click', function(event)
+				g.event.addListener(marker, 'click', function()
 				{
-					// close the info window
-					closeinfowindow();
-
-					// if the info window has been opened before
-					if (UserMap.main.infowindowCache[item.id])
+					// if the info window hasnt been opened before
+					if (self.infoWindowCache[item.id] === undefined)
 					{
-						infowindow.setContent(UserMap.main.infowindowCache[item.id]);
-						infowindow.open(UserMap.theMap,marker);
+						// request the info window data
+						$.getJSON('usermap/list.php?id='+item.id, function(data)
+						{
+							self.infoWindowCache[item.id] = '<div id="infoWindow">'+data[0].html+'</div>';
+							infoWindow.setContent(self.infoWindowCache[item.id]);
+							infoWindow.open(self.theMap, marker);
+						});
 					}
 					else
 					{
-						// request the info window
-						$.getJSON('usermap/list.php?id='+item.id, function(data)
-						{
-							UserMap.main.infowindowCache[item.id] = '<div id="infowindow">'+data[0].html+'</div>';
-							infowindow.setContent(UserMap.main.infowindowCache[item.id]);
-							infowindow.open(UserMap.theMap,marker);
-						});
+						infoWindow.setContent(self.infoWindowCache[item.id]);
+						infoWindow.open(self.theMap, marker);
 					}
 
-					$('#usermap_userlist li#u'+item.id).addClass('isactive');
+					// add active state to the userlist entry
+					$('#usermap_userlist li').removeClass('isactive')
+						.filter('#u'+item.id).addClass('isactive');
 				});
+
+				// if the userlist ul hasnt been created, do it now
+				if ($('#usermap_userlist .inbox'))
+					$('#usermap_userlist .inbox').html(document.createElement('ul'));
+
+				// create the item html for the userlist
+				var li = $(document.createElement('li'))
+					.attr('id', 'u'+item.id)
+					.appendTo($('#usermap_userlist .inbox ul'));
+
+				$(document.createElement('a'))
+					.attr('href', '#u'+item.id).html(item.name)
+					.appendTo(li)
+
+					// set the user icon as the link background
+					.css('background-image', 'url(usermap/img/icons/'+item.icon+')')
+
+					// Add some nice hover effects
+					.hover(function() {
+						$(this).parent().toggleClass('hover');
+					})
+
+					// Set the click event
+					.click(function(){
+
+						// trigger the click event on the marker
+						g.event.trigger(marker,'click');
+
+						// make sure the click doesnt take us anywhere
+						return false;
+					});
 			});
 
-			// fill the userlist
-			if (list.length > 0)
-				$('#usermap_userlist .inbox').html('<ul>'+list.join('')+'</ul>');
-
 			// set the map to fit the bounds?
-			if (UserMap.defaults.fitzoom && data.length != 0)
-				UserMap.theMap.fitBounds(bounds);
+			if (data.length != 0 && UserMap.defaults.fitzoom !== undefined)
+				self.theMap.fitBounds(bounds);
 
 			// if a id was provided, open its infowindow
-			if (UserMap.options.id)
-				UserMap.main.click(UserMap.options.id);
+			if (self.options.id)
+				window.setTimeout(function() {$('#u'+self.options.id+' a').click();}, 200);
+
 		});
 	}
-};
 
-
-/**
- * The Profile Map
- */
-UserMap.profile = {
-	/**
-	 * var that holds the location marker.
-	 */
-	loc_marker: null,
-
-	/**
-	 * the loc_marker options
-	 */
-	loc_marker_opts: {},
-
-	/**
-	 * Set up the profile map
-	 */
-	init: function()
+	// Set up only things that effect the Profile Map
+	UserMap.prototype.profile = function()
 	{
-		// init the map.
-		UserMap.init();
+		var self = this;
 
-		// set the marker options
-		UserMap.profile.loc_marker_opts = {
+		// Start the marker with the basics info
+		this.marker = new g.Marker({
 			icon: UserMap.makeIcon('marker.png',	[35,35],[11,33]),
 			shadow: UserMap.makeShadow(),
 			draggable: true,
-			map: UserMap.theMap
-		};
+		});
 
-		if (UserMap.options.latlng)
+		// Attach some events to the marker
+		g.event.addListener(this.marker, 'click', function()
 		{
-			UserMap.profile.loc_marker_opts.position = new google.maps.LatLng(
-				UserMap.options.latlng[0],
-				UserMap.options.latlng[1]
-			)
-			UserMap.profile.loc_marker = new google.maps.Marker(UserMap.profile.loc_marker_opts);
-			UserMap.profile.create_listeners();
-		}
+			// update the inputs
+			$('#um_lat').val('');
+			$('#um_lng').val('');
 
-		google.maps.event.addListener(UserMap.theMap, 'click', function(event)
+			// remove the marker from the map
+			self.marker.setMap();
+		});
+
+		g.event.addListener(this.marker, 'dragend', function(event)
 		{
-			// if the marker doesnt exists, create it
-			if (UserMap.profile.loc_marker == null)
-			{
-				UserMap.profile.loc_marker_opts.position = event.latLng;
-				UserMap.profile.loc_marker = new google.maps.Marker(UserMap.profile.loc_marker_opts);
-				UserMap.profile.create_listeners();
-			}
-			// otherwise update just move it.
-			else
-				UserMap.profile.loc_marker.setPosition(event.latLng);
-
-			window.setTimeout(function() {UserMap.theMap.panTo(event.latLng);}, 200);
+			// update the inputs
 			$('#um_lat').val(event.latLng.lat());
 			$('#um_lng').val(event.latLng.lng());
+
+			// pan to the new marker location
+			window.setTimeout(function() {self.theMap.panTo(event.latLng);}, 50);
+		});
+
+
+		// If possible, set the marker location and attach it to the map
+		if (this.options.center !== undefined)
+		{
+			this.marker.setMap(this.theMap);
+			this.marker.setPosition(new g.LatLng(
+				this.options.center[0],
+				this.options.center[1]
+			));
+		}
+
+		g.event.addListener(this.theMap, 'click', function(event)
+		{
+			// if the marker isnt on the map, put it there
+			if (self.marker.getMap() === undefined)
+				self.marker.setMap(self.theMap);
+
+			// set the position
+			self.marker.setPosition(event.latLng);
+
+			// update the inputs
+			$('#um_lat').val(event.latLng.lat());
+			$('#um_lng').val(event.latLng.lng());
+
+			// pan to the new marker location
+			window.setTimeout(function() {self.theMap.panTo(event.latLng);}, 50);
 		});
 
 		// make the mouse wheel option checkbox live action
 		$('#mouse_zoom').change(function(){
-			UserMap.theMap.setOptions({scrollwheel:$(this).is(':checked')});
-		});
-	},
-
-	create_listeners: function()
-	{
-		google.maps.event.addListener(UserMap.profile.loc_marker, 'dragend', function(event)
-		{
-			window.setTimeout(function() {UserMap.theMap.panTo(event.latLng);}, 200);
-			$('#um_lat').val(event.latLng.lat());
-			$('#um_lng').val(event.latLng.lng());
+			console.log('it changed!');
+			self.theMap.setOptions({scrollwheel:$(this).is(':checked')});
 		});
 
-		google.maps.event.addListener(UserMap.profile.loc_marker, 'click', function()
+		// add click event for the findLocation function
+		$('#findLocation').click(function()
 		{
-			UserMap.profile.loc_marker.setMap(null);
-			UserMap.profile.loc_marker = null;
-			$('#um_lat').val('');
-			$('#um_lng').val('');
-		});
-	},
-
-/* doesnt return the correct location, atleast not for me anyways. */
-	find_location: function()
-	{
-		$.getScript('http://www.google.com/jsapi', function()
-		{
-			var client = google.loader.ClientLocation;
-
-			if (client && client.latitude && client.longitude)
+			$.getScript('http://www.google.com/jsapi', function()
 			{
-				// console.log('we have a location', client);
+				var client = google.loader.ClientLocation;
 
-				var client_latlng = new google.maps.LatLng(client.latitude,client.longitude);
-
-				// if the marker doesnt exists, create it
-				if (UserMap.profile.loc_marker == null)
+				if (client && client.latitude && client.longitude)
 				{
-					UserMap.profile.loc_marker_opts.position = client_latlng;
-					UserMap.profile.loc_marker = new google.maps.Marker(UserMap.profile.loc_marker_opts);
-					UserMap.profile.create_listeners();
+					var client_latlng = new g.LatLng(client.latitude,client.longitude);
+
+					// if the marker isnt on the map, put it there
+					if (self.marker.getMap() === undefined)
+						self.marker.setMap(self.theMap);
+
+					// set the position
+					self.marker.setPosition(client_latlng);
+					self.theMap.setZoom(6);
+
+					window.setTimeout(function() {self.theMap.panTo(client_latlng);}, 200);
+
+					$('#um_lat').val(client_latlng.lat());
+					$('#um_lng').val(client_latlng.lng());
 				}
+			});
 
-				// otherwise update just move it.
-				else
-					UserMap.profile.loc_marker.setPosition(client_latlng);
-
-				UserMap.theMap.setZoom(10)
-				window.setTimeout(function() {UserMap.theMap.panTo(client_latlng);}, 200);
-				$('#um_lat').val(client_latlng.lat());
-				$('#um_lng').val(client_latlng.lng());
-			}
 		});
 	}
 
-};
+	// Expose UserMap to the global object
+	window.UserMap = UserMap;
+
+	// Add extra functions to the UserMap object
+	$.extend(UserMap, {
+
+		/**
+		 * Default options
+		 */
+		defaults: {
+			center: [0,0],
+			zoom: 0,
+			mapType: 'ROADMAP'
+		},
+
+		/**
+		 * Create an array of g.MarkerImage from one sprite image
+		 */
+		makeSprite: function(img,array)
+		{
+			// loop though each
+			$.each(array, function(i, data)
+			{
+				// names
+				var loc = data[0],
+					size = data[1],
+					anchor = data[2];
+
+				// Reassign the current image data into a g.MarkerImage instance
+				array[i] = new g.MarkerImage(
+					'img/'+img,
+					new g.Size(size[0],size[1]),
+					new g.Point(loc[0],loc[1]),
+					new g.Point(anchor[0],anchor[1])
+				);
+			});
+
+			return array;
+		},
+
+		/**
+		 * Create a single icon out of a image.
+		 */
+		makeIcon: function(img,size,anchor)
+		{
+			// defaults
+			var img = img || 'icons/white.png',
+				size = size || [20, 20],
+				anchor = anchor || [4, 20];
+
+			// return the 'MarkerImage'
+			return new g.MarkerImage(
+				'usermap/img/'+img,
+				new g.Size(size[0],size[1]),
+				new g.Point(0,0),
+				new g.Point(anchor[0],anchor[1])
+			);
+		},
+
+		/**
+		 * Short hand to create the shadow for a marker.
+		 */
+		makeShadow: function()
+		{
+			return this.makeIcon('shadow.png', [36,24],[7,21]);
+		}
+	});
+})();

@@ -21,7 +21,7 @@ else
 // This plugin's url
 $plugin_url = 'admin_loader.php?plugin=AP_Usermap_Settings.php';
 
-// update group
+// Update group
 if (isset($_POST['save_group']))
 {
 	confirm_referrer($plugin_url);
