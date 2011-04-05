@@ -19,10 +19,10 @@ DESCRIPTION:
 	see everyone's location.
 
 AFFECTED FILES:
-	header.php
-	profile.php
 	include/common.php
 	include/functions.php
+	header.php
+	profile.php
 
 AFFECTED DATABASE:
 	config
@@ -64,11 +64,53 @@ INSTALLATION:
 ********************************************************************
 #-------[ 1. Open ]
 
+include/common.php
+
+
+********************************************************************
+#-------[ 2. Place at end of the file ]
+
+// Usermap by Gizzmo - START
+// Require things like functions or language files
+require PUN_ROOT.'usermap/include.php';
+// Usermap by Gizzmo - END
+
+
+********************************************************************
+#-------[ 3. Open ]
+
+include/functions.php
+
+
+********************************************************************
+#-------[ 4. Find (line: 516) ]
+
+		<div class="box">
+			<div class="inbox">
+				<ul>
+					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
+					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="profile.php?section=personal&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personal'] ?></a></li>
+
+
+********************************************************************
+#-------[ 5. After Add ]
+
+<?php
+// Usermap by Gizzmo - START
+	global $lang_usermap;
+	if ($pun_user['g_um_add_to_map'] == '1')
+		echo "\t\t\t\t\t".'<li'.($page == 'usermap'? ' class="isactive"': '').'><a href="profile.php?section=usermap&amp;id='.$id.'">'.$lang_usermap['User map'].'</a></li>'."\n";
+// Usermap by Gizzmo - END
+?>
+
+********************************************************************
+#-------[ 6. Open ]
+
 header.php
 
 
 ********************************************************************
-#-------[ 2. Find (line: 185) ]
+#-------[ 7. Find (line: 185) ]
 
 // Index should always be displayed
 $links[] = '<li id="navindex"'.((PUN_ACTIVE_PAGE == 'index') ? ' class="isactive"' : '').'><a href="index.php">'.$lang_common['Index'].'</a></li>';
@@ -78,7 +120,7 @@ if ($pun_user['g_read_board'] == '1' && $pun_user['g_view_users'] == '1')
 
 
 ********************************************************************
-#-------[ 3. After Add ]
+#-------[ 8. After Add ]
 
 // Usermap by Gizzmo - START
 if ($pun_user['g_um_view_map'] == '1')
@@ -87,13 +129,13 @@ if ($pun_user['g_um_view_map'] == '1')
 
 
 ********************************************************************
-#-------[ 4. Open ]
+#-------[ 9. Open ]
 
 profile.php
 
 
 ********************************************************************
-#-------[ 5. Find (line: 866) ]
+#-------[ 10. Find (line: 866) ]
 
 			if ($form['email_setting'] < 0 || $form['email_setting'] > 2)
 				$form['email_setting'] = $pun_config['o_default_email_setting'];
@@ -103,7 +145,7 @@ profile.php
 
 
 ********************************************************************
-#-------[ 6. After Add ]
+#-------[ 11. After Add ]
 
 // Usermap by Gizzmo - START
 		case 'usermap':
@@ -127,13 +169,13 @@ profile.php
 
 
 ********************************************************************
-#-------[ 7. Find (line: 958) ]
+#-------[ 12. Find (line: 953) ]
 
 $result = $db->query('SELECT u.username, u.email, u.title, u.realname, u.url, u.jabber, u.icq, u.msn, u.aim, u.yahoo, u.location, u.signature, u.disp_topics, u.disp_posts, u.email_setting, u.notify_with_post, u.auto_notify, u.show_smilies, u.show_img, u.show_img_sig, u.show_avatars, u.show_sig, u.timezone, u.dst, u.language, u.style, u.num_posts, u.last_post, u.registered, u.registration_ip, u.admin_note, u.date_format, u.time_format, u.last_visit, g.g_id, g.g_user_title, g.g_moderator FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE u.id='.$id) or error('Unable to fetch user info', __FILE__, __LINE__, $db->error());
 
 
 ********************************************************************
-#-------[ 8. Replace With ]
+#-------[ 13. Replace With ]
 
 // Usermap by Gizzmo - CHANGED
 // NOTE: only added 'u.um_lat, u.um_lng, u.um_scrollwheel,'
@@ -141,7 +183,7 @@ $result = $db->query('SELECT u.um_lat, u.um_lng, u.um_scrollwheel, u.username, u
 
 
 ********************************************************************
-#-------[ 9. Find (line 1775) ]
+#-------[ 14. Find (line 1770) ]
 
 		</div>
 	</div>
@@ -151,7 +193,7 @@ $result = $db->query('SELECT u.um_lat, u.um_lng, u.um_scrollwheel, u.username, u
 
 
 ********************************************************************
-#-------[ 10. After Add ]
+#-------[ 15. After Add ]
 
 // Usermap by Gizzmo - START
 	else if ($section == 'usermap')
@@ -253,107 +295,5 @@ $(function(){
 
 
 ********************************************************************
-#-------[ 11. Open ]
-
-include/common.php
-
-
-********************************************************************
-#-------[ 12. Place at end of the file ]
-
-// Usermap by Gizzmo - START
-// Need this here because its used in the main menu
-if (file_exists(PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php'))
-	require PUN_ROOT.'usermap/lang/'.$pun_user['language'].'.php';
-else
-	require PUN_ROOT.'usermap/lang/English.php';
-// Usermap by Gizzmo - END
-
-
-********************************************************************
-#-------[ 13. Open ]
-
-include/functions.php
-
-
-********************************************************************
-#-------[ 14. Find (line: 516) ]
-
-		<div class="box">
-			<div class="inbox">
-				<ul>
-					<li<?php if ($page == 'essentials') echo ' class="isactive"'; ?>><a href="profile.php?section=essentials&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section essentials'] ?></a></li>
-					<li<?php if ($page == 'personal') echo ' class="isactive"'; ?>><a href="profile.php?section=personal&amp;id=<?php echo $id ?>"><?php echo $lang_profile['Section personal'] ?></a></li>
-
-
-********************************************************************
-#-------[ 15. After Add ]
-
-<?php
-// Usermap by Gizzmo - START
-	global $lang_usermap;
-	if ($pun_user['g_um_add_to_map'] == '1')
-		echo "\t\t\t\t\t".'<li'.($page == 'usermap'? ' class="isactive"': '').'><a href="profile.php?section=usermap&amp;id='.$id.'">'.$lang_usermap['User map'].'</a></li>'."\n";
-// Usermap by Gizzmo - END
-?>
-
-
-********************************************************************
-#-------[ 16. Place at end of file ]
-
-// for php > 5.2
-if (!function_exists('json_encode'))
-{
-	function json_encode($a = false)
-	{
-		if (is_null($a)) return 'null';
-		if ($a === false) return 'false';
-		if ($a === true) return 'true';
-
-		if (is_scalar($a))
-		{
-			if (is_float($a))
-			{
-				// Always use "." for floats.
-				return floatval(str_replace(",", ".", strval($a)));
-			}
-
-			if (is_string($a))
-			{
-				static $jsonReplaces = array(array("\\", "/", "\n", "\t", "\r", "\b", "\f", '"'), array('\\\\', '\\/', '\\n', '\\t', '\\r', '\\b', '\\f', '\"'));
-				return '"' . str_replace($jsonReplaces[0], $jsonReplaces[1], $a) . '"';
-			}
-			else
-				return $a;
-		}
-
-		$isList = true;
-		for ($i = 0, reset($a); $i < count($a); $i++, next($a))
-		{
-			if (key($a) !== $i)
-			{
-				$isList = false;
-				break;
-			}
-		}
-
-		$result = array();
-		if ($isList)
-		{
-			foreach ($a as $v)
-				$result[] = json_encode($v);
-
-			return '[' . join(',', $result) . ']';
-		}
-		else
-		{
-			foreach ($a as $k => $v)
-				$result[] = json_encode($k).':'.json_encode($v);
-			return '{' . join(',', $result) . '}';
-		}
-	}
-}
-
-********************************************************************
-#-------[ 17. Save and Upload ]
+#-------[ 16. Save and Upload ]
 
