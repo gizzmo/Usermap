@@ -23,7 +23,7 @@ $lang_usermap_admin = array(
 	'Options updated redirect'	=> 'Options updated. Redirecting …',
 
 	'Options'					=> 'Options',
-	'Options info'				=> 'To find and set the default location, view the <a href="'.$pun_config['o_base_url'].'/usermap.php">main map</a>. You will see a link at the bottom of the page. Set the map to the location you want, then click the link. You will be sent here with the info already entered, then just click Save.',
+	'Options info'				=> 'To set the default location, view the <a href="'.$pun_config['o_base_url'].'/usermap.php">main map</a>, set the map to the location you want as the default, then right click on the map and click \'Save as default location\'. You will be sent back here with the info already entered. Then just click Save.',
 	'Default latitude'			=> 'Default latitude',
 	'Default longitude'			=> 'Default longitude',
 	'Default zoom'				=> 'Default zoom',
