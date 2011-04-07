@@ -15,6 +15,4 @@ $lang_usermap = array(
 	'User map help'				=> '<strong>Help:</strong> To set your location, click and move the map to your location. Click on the map to add a marker. You can drag the marker around to get a more precise location. To remove your location, click on the marker.',
 	'Scrollwheel zoom help'		=> 'Use your mouse scroll wheel to zoom on the maps.',
 	'Save as default location'	=> 'Save as default location',
-
-	'temptip'					=> ' (this is here until i get a context menu built)',
 );
