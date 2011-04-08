@@ -15,6 +15,9 @@ require PUN_ROOT.'lang/'.$pun_user['language'].'/profile.php';
 if ($pun_user['g_read_board'] == '0' || $pun_user['g_view_users'] == '0' || $pun_user['g_um_view_map'] == '0')
 	um_error($lang_common['No permission']);
 
+// Set some headers
+header("Content-type: application/json");
+
 if (isset($_GET['id']))
 {
 	$id = intval($_GET['id']);
@@ -27,7 +30,7 @@ if (isset($_GET['id']))
 else
 	$extra_sql = '';
 
-$result = $db->query('SELECT u.*, g.g_id, g.g_user_title, g.g_um_icon FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE'.$extra_sql.' u.um_lat IS NOT NULL AND u.um_lng IS NOT NULL AND g.g_um_add_to_map = \'1\' ORDER BY username ASC') or um_error('Unable to marker list.', __FILE__, __LINE__, $db->error());
+$result = $db->query('SELECT u.*, g.g_id, g.g_user_title, g.g_um_icon FROM '.$db->prefix.'users AS u LEFT JOIN '.$db->prefix.'groups AS g ON g.g_id=u.group_id WHERE'.$extra_sql.' u.um_lat IS NOT NULL AND u.um_lng IS NOT NULL AND g.g_um_add_to_map = \'1\' ORDER BY username ASC') or um_error('Unable to get marker list.', __FILE__, __LINE__, $db->error());
 
 $json = array();
 while ($user = $db->fetch_assoc($result))
@@ -96,6 +99,7 @@ while ($user = $db->fetch_assoc($result))
 	<?php echo implode("\n\t", $user_data)."\n"?>
 </dl>
 <?php
+
 		$html = str_replace(array("\t","\n"),'',trim(ob_get_contents()));
 		ob_end_clean();
 	}
@@ -106,7 +110,7 @@ while ($user = $db->fetch_assoc($result))
 		'name'		=> $user['username'],
 		'point'		=> array($user['um_lat'],$user['um_lng']),
 		'icon'		=> $user['g_um_icon'],
-		'html'		=> isset($html) ? $html : ''
+		'html'		=> isset($html)? $html: '',
 	);
 }
 
