@@ -206,16 +206,16 @@ $result = $db->query('SELECT u.um_lat, u.um_lng, u.um_scrollwheel, u.username, u
 		$page_title = array(pun_htmlspecialchars($pun_config['o_board_title']), $lang_common['Profile'], $lang_usermap['User map']);
 		$page_head = array(
 			// The Libs
-			'jquery'	=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>',
-			'googleapi'	=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>',
+			'jquery'			=> '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>',
+			'googleapi'			=> '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>',
 
 			// Context Menu
-			'contextmenuJS' => '<script src="usermap/contextMenu/code.js"></script>',
-			'contextmenuCSS' => '<link href="usermap/contextMenu/style.css" rel="stylesheet" type="text/css">',
+			'contextmenuCSS'	=> '<link type="text/css" rel="stylesheet" href="usermap/contextMenu/style.css" />',
+			'contextmenuJS'		=> '<script type="text/javascript" src="usermap/contextMenu/code.js"></script>',
 
 			// The Core
-			'css'	=> '<link rel="stylesheet" type="text/css" media="screen" href="usermap/style.css" />',
-			'core'	=> '<script type="text/javascript" src="usermap/script.js"></script>'
+			'css'				=> '<link type="text/css" rel="stylesheet" media="screen" href="usermap/style.css" />',
+			'core'				=> '<script type="text/javascript" src="usermap/script.js"></script>'
 		);
 
 		// code
