@@ -11,7 +11,7 @@ require PUN_ROOT.'include/common.php';
 if ($pun_user['g_read_board'] == '0')
 	message($lang_common['No view']);
 
-if ($pun_user['g_um_view_map'] == '0')
+else if ($pun_user['g_view_users'] == '0' || $pun_user['g_um_view_map'] == '0')
 	message($lang_common['No permission']);
 
 $id = isset($_GET['id']) ? intval($_GET['id']) : null;

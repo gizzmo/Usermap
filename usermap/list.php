@@ -12,10 +12,7 @@ require PUN_ROOT.'include/common.php';
 require PUN_ROOT.'lang/'.$pun_user['language'].'/profile.php';
 
 // do some checks first
-if ($pun_user['g_read_board'] == '0')
-	um_error($lang_common['No view']);
-
-if ($pun_user['g_um_view_map'] == '0')
+if ($pun_user['g_read_board'] == '0' || $pun_user['g_view_users'] == '0' || $pun_user['g_um_view_map'] == '0')
 	um_error($lang_common['No permission']);
 
 if (isset($_GET['id']))
@@ -38,10 +35,7 @@ while ($user = $db->fetch_assoc($result))
 	if (isset($id) || isset($_GET['kml']))
 	{
 		// Username
-		if ($pun_user['g_view_users'] == '1')
-			$username = '<a href="'.$pun_config['o_base_url'].'/profile.php?id='.$user['id'].'">'.pun_htmlspecialchars($user['username']).'</a>';
-		else
-			$username = pun_htmlspecialchars($user['username']);
+		$username = '<a href="'.$pun_config['o_base_url'].'/profile.php?id='.$user['id'].'">'.pun_htmlspecialchars($user['username']).'</a>';
 
 		$user_data = array();
 
@@ -105,6 +99,7 @@ while ($user = $db->fetch_assoc($result))
 		$html = str_replace(array("\t","\n"),'',trim(ob_get_contents()));
 		ob_end_clean();
 	}
+
 	// json for the info window
 	$json[]	= array(
 		'id' 		=> $user['id'],

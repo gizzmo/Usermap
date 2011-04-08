@@ -125,7 +125,7 @@ if ($pun_user['g_read_board'] == '1' && $pun_user['g_view_users'] == '1')
 
 // Usermap by Gizzmo - START
 global $lang_usermap; // This is here to so $lang_usermap is accessable when message() is called
-if ($pun_user['g_um_view_map'] == '1')
+if ($pun_user['g_view_users'] == '1' && $pun_user['g_um_view_map'] == '1')
 	$links[] = '<li id="navusermap'.((PUN_ACTIVE_PAGE == 'usermap') ? ' class="isactive"': '').'"><a href="usermap.php">'.$lang_usermap['User map'].'</a></li>';
 // Usermap by Gizzmo - END
 
