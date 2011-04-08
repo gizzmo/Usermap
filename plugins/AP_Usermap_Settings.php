@@ -214,18 +214,18 @@ else
 									</td>
 								</tr>
 								<tr>
-									<th scope='row'><?php echo $lang_usermap_admin['Map height']?></th>
-									<td>
-										<input type='text' name='form[um_height]' size='5' maxlength='4' value='<?php echo pun_htmlspecialchars($pun_config['o_um_height']) ?>' />
-										<span><?php echo $lang_usermap_admin['Map height info']?></span>
-									</td>
-								</tr>
-								<tr>
 									<th scope='row'><?php echo $lang_usermap_admin['Fit map zoom']?></th>
 									<td>
 										<input type='radio' name='form[um_fit_map]' value='1'<?php if ($pun_config['o_um_fit_map'] == '1') echo ' checked=\'checked\'' ?> />&nbsp;<strong><?php echo $lang_admin_common['Yes'] ?></strong>&nbsp;&nbsp;
 										<input type='radio' name='form[um_fit_map]' value='0'<?php if ($pun_config['o_um_fit_map'] == '0') echo ' checked=\'checked\'' ?> />&nbsp;<strong><?php echo $lang_admin_common['No'] ?></strong>
 										<span><?php echo $lang_usermap_admin['Fit map zoom info']?></span>
+									</td>
+								</tr>
+								<tr>
+									<th scope='row'><?php echo $lang_usermap_admin['Map height']?></th>
+									<td>
+										<input type='text' name='form[um_height]' size='5' maxlength='4' value='<?php echo pun_htmlspecialchars($pun_config['o_um_height']) ?>' />
+										<span><?php echo $lang_usermap_admin['Map height info']?></span>
 									</td>
 								</tr>
 							</table>
