@@ -192,7 +192,7 @@
 				$('#usermap_userlist .inbox').html(ul);
 
 			// set the map to fit the bounds?
-			if (data.length != 0 && UserMap.defaults.fitzoom !== undefined)
+			if (data.length != 0 && UserMap.defaults.fitmap)
 				self.theMap.fitBounds(bounds);
 
 			// if a id was provided, open its infowindow

@@ -40,6 +40,7 @@ $(function(){
 		zoom: <?php echo $pun_config['o_um_default_zoom']?>,
 		height: <?php echo $pun_config['o_um_height']?>,
 		scrollwheel: <?php echo ($pun_user['um_scrollwheel'])? 'true': 'false'?>,
+		fitmap: <?php echo ($pun_config['o_um_fit_map'])? 'true': 'false'?>
 	};
 <?php
 	$options = array();
