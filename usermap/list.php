@@ -58,6 +58,13 @@ while ($user = $db->fetch_assoc($result))
 		$user_data[] = '<dt>'.$lang_common['Title'].'</dt>';
 		$user_data[] = '<dd>'.(($pun_config['o_censoring'] == '1') ? censor_words($user_title_field) : $user_title_field).'</dd>';
 
+		// Realname
+		if ($user['realname'] != '')
+		{
+			$user_data[] = '<dt>'.$lang_profile['Realname'].'</dt>';
+			$user_data[] = '<dd>'.pun_htmlspecialchars(($pun_config['o_censoring'] == '1') ? censor_words($user['realname']) : $user['realname']).'</dd>';
+		}
+
 		// Website
 		if ($user['url'] != '')
 		{
@@ -67,21 +74,31 @@ while ($user = $db->fetch_assoc($result))
 		}
 
 		// Posts
-		if ($user['num_posts'] > 0)
+		$posts_field = '';
+		if ($pun_config['o_show_post_count'] == '1' || $pun_user['is_admmod'])
+			$posts_field = forum_number_format($user['num_posts']);
+
+		if ($pun_user['g_search'] == '1')
 		{
-			$posts_field = '';
-			if ($pun_config['o_show_post_count'] == '1' || $pun_user['is_admmod'])
-				$posts_field = forum_number_format($user['num_posts']);
-
-			if ($pun_user['g_search'] == '1')
-				$posts_field .= (($posts_field != '') ? ' - ' : '').'<a href="search.php?action=show_user&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a>';
-
-			if ($posts_field != '')
+			$quick_searches = array();
+			if ($user['num_posts'] > 0)
 			{
-				$user_data[] = '<dt>'.$lang_common['Posts'].'</dt>';
-				$user_data[] = '<dd>'.$posts_field.'</dd>';
+				$quick_searches[] = '<a href="search.php?action=show_user_topics&amp;user_id='.$id.'">'.$lang_profile['Show topics'].'</a>';
+				$quick_searches[] = '<a href="search.php?action=show_user_posts&amp;user_id='.$id.'">'.$lang_profile['Show posts'].'</a>';
 			}
 
+			if (!empty($quick_searches))
+				$posts_field .= (($posts_field != '') ? ' - ' : '').implode(' - ', $quick_searches);
+		}
+
+		if ($posts_field != '')
+		{
+			$user_data[] = '<dt>'.$lang_common['Posts'].'</dt>';
+			$user_data[] = '<dd>'.$posts_field.'</dd>';
+		}
+
+		if ($user['num_posts'] > 0)
+		{
 			$user_data[] = '<dt>'.$lang_common['Last post'].'</dt>';
 			$user_data[] = '<dd>'.format_time($user['last_post']).'</dd>';
 		}
@@ -91,7 +108,7 @@ while ($user = $db->fetch_assoc($result))
 		$user_data[] = '<dd>'.format_time($user['registered'], true).'</dd>';
 
 
-		// the html
+		// The html
 		ob_start();
 ?>
 <h2><?php echo $username?></h2>
