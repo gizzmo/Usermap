@@ -5,7 +5,7 @@
 // Some info about your mod.
 $mod_title			= 'Usermap';
 $mod_version		= '1.1';
-$release_date		= '2010-05-08';
+$release_date		= 'April 5th 2011';
 $author				= 'Gizzmo';
 $author_email		= 'justgiz@gmail.com';
 
@@ -214,3 +214,10 @@ else
 
 </body>
 </html>
+<?php
+
+// End the transaction
+$db->end_transaction();
+
+// Close the db connection (and free up any result data)
+$db->close();
