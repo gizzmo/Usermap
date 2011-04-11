@@ -98,7 +98,7 @@ function restore()
 
 // Circumvent maintenance mode
 define('PUN_TURN_OFF_MAINT', 1);
-define('PUN_ROOT', './');
+define('PUN_ROOT', dirname(__FILE__).'/');
 require PUN_ROOT.'include/common.php';
 
 // We want the complete error message if the script fails
