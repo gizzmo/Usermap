@@ -21,27 +21,32 @@ function install()
 	global $db, $db_type, $pun_config;
 
 	/* Config*/
-	$db->query('INSERT INTO  `'.$db->prefix.'config` (`conf_name` ,`conf_value`) VALUES
-		(\'o_um_default_lat\',		\'0\'),
-		(\'o_um_default_lng\',		\'0\'),
-		(\'o_um_default_zoom\',		\'1\'),
-		(\'o_um_height\',			\'500\'),
-		(\'o_um_fit_map\',			\'0\')
-	') or error('Unable to add config entries to the `'.$db->prefix.'config` table.', __FILE__, __LINE__, $db->error());
+	$config = array(
+		'o_um_default_lat'		=> "'0'",
+		'o_um_default_lng'		=> "'0'",
+		'o_um_default_zoom'		=> "'1'",
+		'o_um_height'			=> "'500'",
+		'o_um_fit_map'			=> "'0'"
+	);
+
+	foreach ($config as $conf_name => $conf_value)
+	{
+		if (!array_key_exists($conf_name, $pun_config))
+		{
+			$db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)")
+				or error('Unable to insert `'.$conf_name.'` into table '.$db_prefix.'config.', __FILE__, __LINE__, $db->error());
+		}
+	}
 
 	/* Users */
-	$db->query('ALTER TABLE `'.$db->prefix.'users`
-		ADD `um_lat` DOUBLE NULL DEFAULT NULL,
-		ADD `um_lng` DOUBLE NULL DEFAULT NULL,
-		ADD `um_scrollwheel` TINYINT(1) NOT NULL DEFAULT  \'0\'
-	') or error('Unable to add the `Latitude`, `Longitude`, and `Scrollwheel` fields to the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+	$db->add_field('users', 'um_lat', 'DOUBLE', true) or error('Unable to add `um_lat` field to the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+	$db->add_field('users', 'um_lng', 'DOUBLE', true) or error('Unable to add `um_lng` field to the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+	$db->add_field('users', 'um_scrollwheel', 'TINYINT(1)', false, '0') or error('Unable to add `um_scrollwheel` field to the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
 
 	/* Group */
-	$db->query('ALTER TABLE `'.$db->prefix.'groups`
-		ADD `g_um_view_map` TINYINT(1) NOT NULL DEFAULT \'1\',
-		ADD `g_um_add_to_map` TINYINT(1) NOT NULL DEFAULT \'1\',
-		ADD `g_um_icon` VARCHAR(50) NOT NULL DEFAULT \'white.png\'
-	') or error('Unable to add the `g_um_view_map`, `g_um_add_to_map` and `g_um_icon` fields to the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
+	$db->add_field('groups', 'g_um_view_map', 'TINYINT(1)', false, '1') or error('Unable to add `g_um_view_map` field to the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
+	$db->add_field('groups', 'g_um_add_to_map', 'TINYINT(1)', false, '1') or error('Unable to add `g_um_add_to_map` field to the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
+	$db->add_field('groups', 'g_um_icon', 'VARCHAR(50)', false, 'white.png') or error('Unable to add `g_um_icon` field to the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
 
 	/* Set the default icons for the groups */
 	$db->query('UPDATE `'.$db->prefix.'groups` SET `g_um_icon` = \'red.png\' WHERE `g_id` = 1') or error('Unable to update admin group.', __FILE__, __LINE__, $db->error());
@@ -70,20 +75,14 @@ function restore()
 	') or error('Unable to remove config items from the `'.$db->prefix.'config` table', __FILE__, __LINE__, $db->error());
 
 	/* Users */
-	$db->query('ALTER TABLE `'.$db->prefix.'users`
-		DROP `um_lat`,
-		DROP `um_lng`,
-		DROP `um_scrollwheel`
-	') or error('Unable to remove the `um_lat` and `um_lng` fields from the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+	$db->drop_field('users', 'um_lat') or error('Unable to remove `um_lat` from the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+	$db->drop_field('users', 'um_lng') or error('Unable to remove `um_lng` from the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
+	$db->drop_field('users', 'um_scrollwheel') or error('Unable to remove `um_scrollwheel` from the `'.$db->prefix.'user` table.', __FILE__, __LINE__, $db->error());
 
 	/* Group */
-	$db->query('ALTER TABLE `'.$db->prefix.'groups`
-		DROP `g_um_view_map`,
-		DROP `g_um_add_to_map`,
-		DROP `g_um_icon`
-	') or error('Unable to remove the `g_um_view_map`, `g_um_add_to_map` and `g_um_icon` fields from the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
-
-	// $db->query('') or error('', __FILE__, __LINE__, $db->error());
+	$db->drop_field('users', 'g_um_view_map') or error('Unable to remove `g_um_view_map` from the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
+	$db->drop_field('users', 'g_um_add_to_map') or error('Unable to remove `g_um_add_to_map` from the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
+	$db->drop_field('users', 'g_um_icon') or error('Unable to remove `g_um_icon` from the `'.$db->prefix.'groups` table.', __FILE__, __LINE__, $db->error());
 
 	// update cache, we removed config items
 	if (!defined('FORUM_CACHE_FUNCTIONS_LOADED'))
@@ -119,7 +118,7 @@ $style = (isset($pun_user)) ? $pun_user['style'] : $pun_config['o_default_style'
 </head>
 <body>
 
-<div id="puninstall" class="pun" style="margin: 0 20% 0 20%">
+<div id="puninstall" class="pun" style="margin: 0 auto; width: 550px">
 	<div class="top-box"><div><!-- Top Corners --></div></div>
 	<div class="punwrap">
 
