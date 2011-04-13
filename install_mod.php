@@ -4,8 +4,8 @@
 
 // Some info about your mod.
 $mod_title			= 'Usermap';
-$mod_version		= '1.1';
-$release_date		= 'April 5th 2011';
+$mod_version		= '1.1.1';
+$release_date		= 'April 13th 2011';
 $author				= 'Gizzmo';
 $author_email		= 'justgiz@gmail.com';
 

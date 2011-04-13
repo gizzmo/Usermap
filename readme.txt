@@ -3,8 +3,8 @@
 ********************************************************************
 Name:          Usermap
 Author:        Gizzmo <justgiz@gmail.com>
-Version:       1.1
-Release date:  April 5th 2011
+Version:       1.1.1
+Release date:  April 13th 2011
 Works on:      1.4.5
 ********************************************************************
 DISCLAIMER:
