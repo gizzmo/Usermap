@@ -33,8 +33,8 @@ function install()
 	{
 		if (!array_key_exists($conf_name, $pun_config))
 		{
-			$db->query('INSERT INTO '.$db_prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)")
-				or error('Unable to insert `'.$conf_name.'` into table '.$db_prefix.'config.', __FILE__, __LINE__, $db->error());
+			$db->query('INSERT INTO '.$db->prefix."config (conf_name, conf_value) VALUES('$conf_name', $conf_value)")
+				or error('Unable to insert `'.$conf_name.'` into table '.$db->prefix.'config.', __FILE__, __LINE__, $db->error());
 		}
 	}
 
